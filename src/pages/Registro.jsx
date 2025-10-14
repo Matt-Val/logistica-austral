@@ -31,6 +31,7 @@ export default function Registro() {
         }
 
         const correo = form.inputCorreo.trim().toLowerCase();
+        
         if (!correo.includes("@") || !correo.includes(".")) {
             setErr("Por favor, ingrese un correo válido");
             return;
