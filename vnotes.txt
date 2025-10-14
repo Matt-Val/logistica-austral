@@ -1,0 +1,14 @@
+
+npm create vite@latest NOMBREPROYECTO
+    - react
+    - Javascript
+    - No experimental
+    - Yes, (install and run)
+
+
+
+npm run dev 
+    > para correr proyecto
+
+npm install react-router-dom
+    > para las rutas de router

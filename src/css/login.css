@@ -1,0 +1,41 @@
+.login-bg {
+    min-height: 100vh;
+    background-image: url("../assets/img/inicio.jpg"); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-grande-formulario {
+    font-weight: bold;
+    color: black;
+    letter-spacing: 1px;
+}
+
+.btn-registrarse {
+    background-color: #4c7faf; /* Cambiar el color del boton */
+    color: #fff; /* Cambiar el color dentro del texto */
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.btn-registrarse:hover {
+    background-color: #4e4caf; /* cambia el color al pasar el mouse */
+}
+
+.caja { 
+    background: rgba(255,255,255,0.85);
+    border-radius: 0; /* Esquinas rectas */ 
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15); /* Sombra alrededor */ 
+    padding: 3rem;
+    margin: 3rem 0;
+    width: 100%;
+    min-width: 320px; /* Ancho Minimo */ 
+    max-width: 400px; /* Ancho Maximo*/ 
+}

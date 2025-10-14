@@ -1,0 +1,55 @@
+
+.inicio-principal {
+  background-size: cover;
+  min-height: fit-content;
+}
+
+.imagen-principal {
+  max-height: 600px;
+  position: relative;     /* el elemento sigue ocupando su espacio normal en el flujo de pagina, pero ahora puede ser movido respecto a su posicion oriiginal*/
+  margin-bottom: -80px;   /*Hace que sobresalga hacia la seccion blanca, padding negativo*/
+  z-index: 2; /* para asegurarse que no quede cortado */
+}
+
+/* carrusel de bootstrap */
+.carousel {
+  margin-bottom: 4rem;
+}
+
+/* sus interiores */
+.carousel-caption {
+  bottom: 3rem;
+  z-index: 10;
+}
+
+.carousel-item {
+  height: 32rem;
+}
+
+/* para todos los parrafos p que estan dentro de carrusel-caption */
+.carousel-caption p {
+    margin-bottom: 1.25rem;
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+.carousel-caption h1 {
+  font-weight: bold;
+}
+
+  section {
+    margin-left: 4rem;
+    margin-right: 4rem;
+  }
+
+  .boton-per {
+    background-color: #4c7faf;
+    color: white;
+  }
+
+  .boton-per:hover {
+    background-color: #4e4caf;
+    color: white;
+  }
+
+
