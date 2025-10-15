@@ -1,4 +1,5 @@
 
+
 function Login() {
     const handleLogin = () => {
         console.log('Boton Ingresar presionado, se hace el submit')
@@ -6,7 +7,7 @@ function Login() {
     // NOTA: el boton ingresar, manejarlo como type="submit" en el futuro, en vez de type="button"
     return (
     <>
-        <main className="login-bg">
+        <main className="d-flex justify-content-center align-items-center vh-100">
             <div className="caja">
                 <h3 className="text-grande-formulario text-center mb-4">Inicio de Sesión</h3>
                 <p className="text-center text-secondary mb-4">Por favor, ingrese su correo y contraseña para acceder a su cuenta.</p>

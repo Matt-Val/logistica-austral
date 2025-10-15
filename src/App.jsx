@@ -7,9 +7,10 @@ import Footer from './components/layout/Footer'
 // "paginas"
 import Login from './pages/Login'
 import Inicio from './pages/Inicio'
+import Explorar from './pages/Explorar'
+import DetalleCamion from './pages/DetalleCamion'
 
 import './css/App.css'
-import Registro from './pages/Registro'
 
 function App() {
   // me carga esta identacion
@@ -19,9 +20,9 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Inicio />} />
+          <Route path='/explorar' element={<Explorar />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/registro' element={<Registro />} />
-          <Route path='/quienes-somos' element={<QuienesSomos />} />
+          <Route path='/detalle/:id' element={<DetalleCamion />}/>
         </Routes>
         <Footer />          
       </>

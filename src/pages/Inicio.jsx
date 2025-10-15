@@ -1,12 +1,8 @@
-
 import logisticaMapa from '../assets/img/chl-log-aus.png'
-import marcas from '../assets/img/marcas.png'
-
 
 import Carrusel from '../components/ui/Carrusel'
 
 import '../css/inicio.css'
-import '../css/login.css'
 
 function Inicio() {
     return(

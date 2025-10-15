@@ -1,0 +1,44 @@
+.camion-card {
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.camion-media img {
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    border-radius: .5rem;
+}
+
+.camion-espec li + li {
+    margin-top: .25rem;
+}
+
+.camion-espec span {
+    font-weight: 530;
+}
+
+.camion-botones .btn {
+    width: 100%
+}
+
+.camion-botones .boton-detalles {
+    border-color: #363636;
+    border-radius: 0.5rem;
+}
+
+.camion-botones .boton-cotizar {
+    background-color: #363636;
+    color: #fff;
+    border-radius: 0.5rem;
+}
+
+.camion-botones .boton-cotizar:hover {
+    background-color: #106FDC;
+    color: #fff;
+}
+
+.camion-botones .boton-detalles:hover {
+    background-color: #106FDC;
+    color: #fff;
+}

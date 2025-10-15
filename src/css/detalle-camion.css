@@ -1,0 +1,29 @@
+.camion-detalle .detalle-hero {
+    border-radius: 1rem;
+    overflow: hidden;
+    background: #f8f9fa;
+}
+.camion-detalle .detalle-hero img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover; /* llena el recuadro */
+}
+
+.detalle-lateral {
+    display: block;
+    max-width: 520px;   /* “mitad” */
+    width: 100%;
+    margin: 0 auto;
+    height: 160px;
+    object-fit: contain; 
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,.12));
+}
+
+@media (min-width: 992px) {
+    .camion-detalle .detalle-hero img { 
+        height: 460px;
+    }
+    .detalle-lateral {
+        height: 180px;
+    }
+}
