@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-
+import React from "react"
 
 
 const Navbar = () => {
@@ -16,9 +16,9 @@ const Navbar = () => {
                         <Link className="nav-link dropdown-toggle link-body-emphasis px-8" to="#" data-bs-toggle="dropdown" aria-expanded="false">Arriendo de Camiones</Link>
                         <ul className="dropdown-menu">
                             <li><Link className="dropdown-item" to="/explorar">Ver Todos</Link></li>
-                            <li><Link className="dropdown-item" to="#">Tolva</Link></li>
-                            <li><Link className="dropdown-item" to="#">Tracto</Link></li>
-                            <li><Link className="dropdown-item" to="#">Camas bajas y ramplas</Link></li>
+                            <li><Link className="dropdown-item" to="/explorar?tipo=tolva">Tolva</Link></li>
+                            <li><Link className="dropdown-item" to="/explorar?tipo=tracto">Tracto</Link></li>
+                            <li><Link className="dropdown-item" to="/explorar?tipo=rampla">Camas bajas y ramplas</Link></li>
                         </ul>
                     </li>
                     <li className="nav-item">

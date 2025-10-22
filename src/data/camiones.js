@@ -21,7 +21,8 @@ const trucks = [
         traccion: "8x4/4 midlift",
         longitudMax: "12.0 m",
         ejes: 4,
-        peso: "23T"
+        peso: "23T",
+        tipo: "tracto"
     },
     {
         id: 2,
@@ -34,7 +35,8 @@ const trucks = [
         traccion: "4x2",
         longitudMax: "14.5 m",
         ejes: 2,
-        peso: "12T"
+        peso: "12T",
+        tipo: "rigido"
     },
     {
         id: 3,
@@ -47,7 +49,8 @@ const trucks = [
         traccion: "4x2",
         longitudMax: "12.2 m",
         ejes: 2,
-        peso: "18T"
+        peso: "18T",
+        tipo: "tracto"
     },
     {
         id: 4,
@@ -60,7 +63,8 @@ const trucks = [
         traccion: "4x2",
         longitudMax: "12.0 m",
         ejes: 2,
-        peso: "20T"
+        peso: "20T",
+        tipo: "tracto"
     },
     {
         id: 5,
@@ -73,12 +77,13 @@ const trucks = [
         traccion: "6x2 taglift",
         longitudMax: "13.8 m",
         ejes: 3,
-        peso: "19T"                               
+        peso: "19T",
+        tipo: "rigido"                               
     },
     {
         id: 6,
         marca: "Mercedes Benz",
-        nombre: "Actros 3336 Rampla",
+        nombre: "Actros 3336 Tolva",
         motor: "336HP",
         descripcion: "El legado de Mercedes Benz, especial para transporte con rampla de gran capacidad.",
         imagen: mercedes3336,
@@ -86,7 +91,8 @@ const trucks = [
         traccion: "6x4",
         longitudMax: "10.5 m",
         ejes: 3,
-        peso: "21T"                                   
+        peso: "21T",
+        tipo: "tolva"                                   
     }
 ]
 

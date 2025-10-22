@@ -13,6 +13,7 @@ const CamionCard = ({ camion }) => {
                 <div className="col-12 col-md-5 p-3">
                     <h5>{camion.marca} {camion.nombre}</h5>
                     <p className="mb-2 small text-body-secondary">Motor: {camion.motor}</p>
+                    <p className="mb2 small text-body-secondary">Tipo: {camion.tipo}</p>
                     <ul className="camion-espec mb-0">
                         <li><span>Tracción:</span> {camion.traccion}</li>
                         <li><span>Longitud máx:</span> {camion.longitudMax}</li>
