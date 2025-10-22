@@ -10,6 +10,8 @@ import Inicio from './pages/Inicio'
 import Registro from './pages/Registro'
 import QuienesSomos from './pages/QuienesSomos'
 import Administrador from './pages/Administrador'
+import DetalleCamion from './pages/DetalleCamion'
+import Explorar from './pages/Explorar'
 
 import './css/App.css'
 import './css/login.css'
@@ -30,6 +32,8 @@ function App() {
           <Route path='/quienes-somos' element={<QuienesSomos />} />
           <Route path='/Inicio' element={<Inicio />} />
           <Route path='/Administrador' element={<Administrador />} />
+          <Route path='/explorar' element={<Explorar />} />
+          <Route path='/detalle/:id' element={<DetalleCamion />} />
         </Routes>
         <Footer />          
       </>
