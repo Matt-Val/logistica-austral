@@ -6,7 +6,7 @@ function DetalleCamion() {
     const { id } = useParams()
     const camion = trucks.find(c => String(c.id) === String(id))
 
-    const {marca, nombre, motor, imagen, lateral, traccion, longitudMax, ejes, peso, descripcion} = camion
+    const {marca, nombre, motor, imagen, lateral, traccion, longitudMax, ejes, peso, descripcion, tipo} = camion
 
     return (
         <div className="container py-4 camion-detalle">
@@ -21,6 +21,9 @@ function DetalleCamion() {
                 <div className="col-12 col-lg-6">
                     <h2 className="mb-1">{marca} {nombre}</h2>
                     <div className="mb-3">Motor: {motor}</div>
+                    <ul>
+                        <li>Tipo Camión: {tipo}</li>
+                    </ul>
                     {descripcion && <p className="mb-4">{descripcion}</p>}
 
                     <div className="d-flex gap-2 mb-3">
@@ -31,7 +34,9 @@ function DetalleCamion() {
 
         <img className="detalle-lateral my-4" src={lateral || imagen} alt={`Vista lateral ${marca} ${nombre}`}/>
 
-        
+        <div className="d-flex justify-content-center mt-4">
+            <h2>Especificaciones</h2>
+        </div>
         <div className="table-responsive">
             <table className="table align-middle table-striped">
                 <thead>
@@ -46,6 +51,7 @@ function DetalleCamion() {
                     <tr><td>Ejes</td><td>{ejes}</td></tr>
                     <tr><td>Peso</td><td>{peso}</td></tr>
                     {motor && <tr><td>Motor</td><td>{motor}</td></tr>}
+                    <tr><td>Tipo Camión</td><td>{tipo}</td></tr>
                 </tbody>
             </table>
         </div>
