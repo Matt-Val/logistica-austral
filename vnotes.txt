@@ -12,3 +12,14 @@ npm run dev
 
 npm install react-router-dom
     > para las rutas de router
+
+-- SI NO FUNCIONA EN WINDOWS, UTILIZA GIT BASH, -> permisos de script
+
+Para cuando se descargue el proyecto en otro computador por ejemplo, desde github, se sube sin npm
+tonces, para utilizar y desarrollar proyecto, pum:
+
+npm install
+    > para npm
+
+npm install react-router-dom
+    > para router 
