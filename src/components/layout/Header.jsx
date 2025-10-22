@@ -29,7 +29,7 @@ const Header = () => {
                         <img src={logo} alt="Logo" className="img-fluid" style={{ maxWidth: '160px' }} />
                     </div>
                     <div className="col-12 col-lg-6 d-flex justify-content-center">
-                        <form className="w-100" role="search" onSubmit={onSubmit}>
+                        <form className="w-100 d-flex align-items-center justify-content-center" role="search" onSubmit={onSubmit}>
                             <input
                                 type="search"
                                 className="form-control"
@@ -38,7 +38,7 @@ const Header = () => {
                                 value={q}
                                 onChange={ (e) => setQ(e.target.value)}
                             />
-                            <button type="submit" className="btn boton-per">Buscar</button>
+                            <button type="submit" className="btn boton-buscar">Buscar</button>
                         </form>
                     </div>
                     <div className="col-lg-3 d-none d-lg-block"></div>

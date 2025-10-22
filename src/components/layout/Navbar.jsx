@@ -18,6 +18,7 @@ const Navbar = () => {
                             <li><Link className="dropdown-item" to="/explorar">Ver Todos</Link></li>
                             <li><Link className="dropdown-item" to="/explorar?tipo=tolva">Tolva</Link></li>
                             <li><Link className="dropdown-item" to="/explorar?tipo=tracto">Tracto</Link></li>
+                            <li><Link className="dropdown-item" to="/explorar?tipo=rigido">Rigidos</Link></li>
                             <li><Link className="dropdown-item" to="/explorar?tipo=rampla">Camas bajas y ramplas</Link></li>
                         </ul>
                     </li>
