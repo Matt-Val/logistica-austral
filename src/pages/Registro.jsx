@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+
 
 export default function Registro() { 
     const nav = useNavigate();
-    const { register } = useAuth();
+    const { register } = useContext(AuthContext);
     
     const [form, setForm] = useState({
         inputNombre: "",
@@ -25,44 +27,38 @@ export default function Registro() {
         e.preventDefault();
         setErr("");
 
-        if (!form.inputNombre || !form.inputRut || !form.inputCorreo || !form.inputTelefono || !form.inputPassword || !form.inputConfirmPassword) {
-            setErr("Por favor, complete todos los campos.");
-            return;
-        }
+        try {
+            if (!form.inputNombre || !form.inputRut || !form.inputCorreo || !form.inputTelefono || !form.inputPassword || !form.inputConfirmPassword) {
+                setErr("Por favor, complete todos los campos.");
+                return;
+            }
 
-        const correo = form.inputCorreo.trim().toLowerCase();
-        
-        if (!correo.includes("@") || !correo.includes(".")) {
-            setErr("Por favor, ingrese un correo válido");
-            return;
-        }
+            if (!form.inputCorreo.includes("@") || !form.inputCorreo.includes(".")) {
+                setErr("Por favor, ingrese un correo válido");
+                return;
+            }
 
-        if (form.inputPassword.length < 8) {
-            setErr("La contraseña debe tener al menos 8 caracteres.");
-            return;
-        }
+            if (form.inputPassword.length < 8) {
+                setErr("La contraseña debe tener al menos 8 caracteres.");
+                return;
+            }
 
-        if (form.inputPassword !== form.inputConfirmPassword) {
-            setErr("Las contraseñas no coinciden.");
-            return;
-        }
-        try { 
-            await register({
-                inputNombre: form.inputNombre.trim(),
-                inputRut: form.inputRut.trim(),
-                inputCorreo: correo, // La calculamos arriba, linea 34
-                inputTelefono : form.inputTelefono.trim(),
-                inputPassword: form.inputPassword
-            });
-            alert("Registro exitoso.");
-            nav("/Inicio")
-        } catch (e) { 
-            setErr(e.message || "Error al registrarse.");
+            if (form.inputPassword !== form.inputConfirmPassword) {
+                setErr("Las contraseñas no coinciden.");
+                return;
+            }
+
+            await register(form);
+            alert("Registro exitoso!");
+            nav("/Inicio");
+        } catch (error) { 
+            console.error("Error en registro:", error);
+            setErr(error.message || "Error al registrarse.");
         }
     }
 
     return (
-        <main className="d-flex justify-content-center align-items-center vh-100">
+        <main className="login-bg">
             <div className="caja">
                 <form onSubmit={onSubmit}>
                     <label className="text-grande-formulario text-center d-block mb-4 fs-4">
@@ -134,7 +130,7 @@ export default function Registro() {
                         />
                     </div>
 
-                    <div className= "mb-3">
+                    <div className="mb-3">
                         <label className="text-grande-formulario">Confirmar Contraseña</label>
                         <input
                             type="password"
@@ -154,7 +150,6 @@ export default function Registro() {
                     </div>
                 </form>
             </div>
-
         </main>
     )
 }

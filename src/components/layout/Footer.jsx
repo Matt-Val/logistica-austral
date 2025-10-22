@@ -25,7 +25,7 @@ const Footer = () => {
                         <a href="/" className="nav-link link-body-emphasis px-8">FAQs</a>
                     </li>
                     <li className="nav-item">
-                        <a href="/" className="nav-link link-body-emphasis px-8 ">Quiénes Somos</a>
+                        <a href="/QuienesSomos" className="nav-link link-body-emphasis px-8 ">Quiénes Somos</a>
                     </li>
                 </ul>
             </div>
