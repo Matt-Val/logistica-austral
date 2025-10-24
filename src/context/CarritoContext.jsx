@@ -5,7 +5,7 @@ export const CarritoContext = createContext()
 
 export function CarritoProvider({ children }) {
     
-    // items tiene: [{ id, marca, nombre, imagen, fechas: { inicio, fin }, meses }]
+    // items tiene: [{ lineaId, id, marca, nombre, imagen, fechas: { inicio, fin }, meses }]
     const [items, setItems] = useState(() => { 
         try { 
             const guardado = localStorage.getItem('carrito') // obtiene el carrito del localstorage
@@ -17,7 +17,7 @@ export function CarritoProvider({ children }) {
     })
 
     
-    const [popup, setPopup] = useState({ abierto: false, id: null })
+    const [popup, setPopup] = useState({ abierto: false, lineaId: null })
 
     const persistir = (proximo) => {
         // para actualizar el carrito en local storage
@@ -37,39 +37,36 @@ export function CarritoProvider({ children }) {
     }
 
     const agregarItem = (camion) => {
-        // si ya existe, no duplicar; solo abrir popup para editar fechas
-        const existe = items.find((it) => it.id === camion.id)
-        let nuevo = items
-
-        if (!existe) {
-            const hoy = new Date()
-            const fin = new Date(hoy)
-            fin.setMonth(fin.getMonth() + 1)
-            const item = {
-                id: camion.id,
-                marca: camion.marca,
-                nombre: camion.nombre,
-                imagen: camion.imagen,
-                fechas: {
+        // Siempre agrega una nueva linea (posibles duplicados del mismo equipo con fechas distintas)
+        const hoy = new Date()
+        const fin = new Date(hoy)
+        fin.setMonth(fin.getMonth() + 1)
+        const item = {
+            lineaId: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+            id: camion.id,
+            marca: camion.marca,
+            nombre: camion.nombre,
+            imagen: camion.imagen,
+            fechas: {
                 inicio: hoy.toISOString().slice(0, 10),
                 fin: fin.toISOString().slice(0, 10),
-                },
-                meses: 1,
-            }
-            nuevo = [...items, item]
-            persistir(nuevo)
+            },
+            meses: 1,
         }
-        setPopup({ abierto: true, id: camion.id })
+        const nuevo = [...items, item]
+        persistir(nuevo)
+        setPopup({ abierto: true, lineaId: item.lineaId })
     }
 
-    const quitarItem = (id) => {
-        const proximo = items.filter((it) => it.id !== id) // excluye el item con ese id
+    const quitarItem = (lineaId) => {
+        // Compatibilidad: si vienen items antiguos sin lineaId, tambien intentamos por id
+        const proximo = items.filter((it) => it.lineaId !== lineaId && it.id !== lineaId)
         persistir(proximo)
     }
 
-    const actualizarFechas = (id, inicio, fin) => {
+    const actualizarFechas = (lineaId, inicio, fin) => {
         const proximo = items.map((it) =>
-        it.id === id ? {
+        (it.lineaId === lineaId || it.id === lineaId) ? {
                 ...it,
                 fechas: { inicio, fin },
                 meses: calcularMeses(inicio, fin),
@@ -78,8 +75,8 @@ export function CarritoProvider({ children }) {
         persistir(proximo)
     }
 
-    const abrirPopup = (id) => setPopup({ abierto: true, id })
-    const cerrarPopup = () => setPopup({ abierto: false, id: null })
+    const abrirPopup = (lineaId) => setPopup({ abierto: true, lineaId })
+    const cerrarPopup = () => setPopup({ abierto: false, lineaId: null })
 
     const total = items.length
 

@@ -5,11 +5,11 @@ import { useCarrito } from '../../context/CarritoContext'
 
 const PopupCotizacion = () => {
     const navegar = useNavigate()
-    const { popup, items, actualizarFechas, cerrarPopup } = useCarrito() // agarramos funciones, estados del contextCrrito
+       const { popup, items, actualizarFechas, cerrarPopup } = useCarrito() // agarramos funciones, estados del contextCrrito
 
     if (!popup.abierto) return null // para cuando el popuup no esta abierto, que no renderice nada
 
-    const item = items.find((i) => i.id === popup.id) // busca el item agregado usando el id guardado en el carrito
+       const item = items.find((i) => i.lineaId === popup.lineaId) // busca el item agregado usando el lineaId guardado en el popup
     
     if (!item) return null // no item, bum: null
 
@@ -17,7 +17,7 @@ const PopupCotizacion = () => {
         const { name, value } = e.target
         const inicio = name === 'inicio' ? value : item.fechas.inicio
         const fin = name === 'fin' ? value : item.fechas.fin
-        actualizarFechas(item.id, inicio, fin)
+           actualizarFechas(item.lineaId, inicio, fin)
     }
 
     const irAlCarrito = () => { // con esto maneja el popup, asi dice: cierra y navega

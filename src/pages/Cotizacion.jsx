@@ -4,10 +4,62 @@ import { useCarrito } from '../context/CarritoContext'
 const Cotizacion = () => {
     const { items, quitarItem } = useCarrito()
 
+    // Estado del formulario
+    const [form, setForm] = React.useState({
+        nombre: '',
+        rut: '',
+        telefono: '',
+        email: '',
+        region: '', // sin validacion por ahora
+        fechaInicio: ''
+    })
+    const [err, setErr] = React.useState('')
+
     const enviarFormulario = (e) => {
         e.preventDefault()
-        // ATENCAO por ahora solo muestra una alerta de exito
+        setErr('')
+
+        // Validaciones similares a Registro.jsx (adaptadas)
+        const { nombre, rut, telefono, email, fechaInicio } = form
+
+        if (!nombre || !rut || !telefono || !email || !fechaInicio) {
+            setErr('Por favor, complete todos los campos requeridos.')
+            return
+        }
+
+        if (!email.includes('@') || !email.includes('.')) {
+            setErr('Por favor, ingrese un correo válido.')
+            return
+        }
+
+        const soloDigitos = (telefono || '').replace(/\D/g, '')
+        if (soloDigitos.length < 8) {
+            setErr('Ingrese un número de contacto válido (al menos 8 dígitos).')
+            return
+        }
+
+        // Debe haber al menos un equipo para cotizar
+        if (items.length === 0) {
+            setErr('Agregue al menos un equipo al carrito para cotizar.')
+            return
+        }
+
+        // Fecha no puede ser anterior a hoy
+        const hoy = new Date().toISOString().slice(0, 10)
+        if (fechaInicio < hoy) {
+            setErr('La fecha de inicio estimada no puede ser anterior a hoy.')
+            return
+        }
+
         alert('Solicitud de cotización enviada. ¡Te contactaremos pronto!')
+            // limpieza basica
+            setForm({ nombre: '', rut: '', telefono: '', email: '', region: '', fechaInicio: '' })
+    }
+
+    const onChange = (e) => {
+        const { name, value } = e.target
+        setErr('')
+        setForm((f) => ({ ...f, [name]: value }))
     }
 
     return (
@@ -15,33 +67,38 @@ const Cotizacion = () => {
             <div className="row g-4">
                 
                 <div className="col-12 col-lg-7">
-                    <h2 className="mb-3">Carro de Cotización</h2>
+                    <h2 className="mb-3">🛒 Carro de Cotización</h2>
                     <p className="text-body-secondary">¡Ya casi terminas tu proceso de solicitud de cotización!</p>
                     <form className="row g-3" onSubmit={enviarFormulario}>
                         <div className="col-12 col-md-6">
                             <label className="form-label">Nombre o Razón Social</label>
-                            <input type="text" className="form-control" required />
+                            <input type="text" className="form-control" name="nombre" value={form.nombre} onChange={onChange} required />
                         </div>
                         <div className="col-12 col-md-6">
                             <label className="form-label">RUT</label>
-                            <input type="text" className="form-control" placeholder="12345678-9" />
+                            <input type="text" className="form-control" name="rut" value={form.rut} onChange={onChange} placeholder="12345678-9" />
                         </div>
                         <div className="col-12 col-md-6">
                             <label className="form-label">Número de contacto</label>
-                            <input type="tel" className="form-control" placeholder="Ej: 912345678" required />
+                            <input type="tel" className="form-control" name="telefono" value={form.telefono} onChange={onChange} placeholder="Ej: 912345678" required />
                         </div>
                         <div className="col-12 col-md-6">
                             <label className="form-label">E-Mail</label>
-                            <input type="email" className="form-control" placeholder="ejemplo@correo.cl" required />
+                            <input type="email" className="form-control" name="email" value={form.email} onChange={onChange} placeholder="ejemplo@correo.cl" required />
                         </div>
                         <div className="col-12 col-md-6">
                             <label className="form-label">Región donde opera</label>
-                            <input type="text" className="form-control" placeholder="Selecciona una región" />
+                            <input type="text" className="form-control" name="region" value={form.region} onChange={onChange} placeholder="Selecciona una región" />
                         </div>
                         <div className="col-12 col-md-6">
                             <label className="form-label">Fecha de inicio Estimada</label>
-                            <input type="date" className="form-control" />
+                            <input type="date" className="form-control" name="fechaInicio" value={form.fechaInicio} onChange={onChange} min={new Date().toISOString().slice(0,10)} />
                         </div>
+                        {err && (
+                            <div className="col-12">
+                                <div className="alert alert-danger" role="alert">{err}</div>
+                            </div>
+                        )}
                             <div className="col-12">
                             <button className="btn boton-formulario">Enviar</button>
                         </div>
@@ -55,7 +112,7 @@ const Cotizacion = () => {
                     )}
                     <div className="d-flex flex-column gap-3">
                         {items.map((it) => (
-                        <div key={it.id} className="shadow-sm p-3 rounded border bg-white">
+                        <div key={it.lineaId ?? it.id} className="shadow-sm p-3 rounded border bg-white">
                             <div className="d-flex align-items-center gap-3">
                                 <img src={it.imagen} alt="camion" style={{ width: 72, height: 48, objectFit: 'cover' }} />
                             <div className="flex-grow-1">
@@ -67,7 +124,7 @@ const Cotizacion = () => {
                                 </div>
                                 <div className="small">Inicio: {it.fechas.inicio} - Fin: {it.fechas.fin}</div>
                             </div>
-                                <button className="btn btn-link text-danger" title="Quitar" onClick={() => quitarItem(it.id)}>🗑️</button>
+                                <button className="btn btn-link text-danger" title="Quitar" onClick={() => quitarItem(it.lineaId ?? it.id)}>🗑️</button>
                             </div>
                         </div>
                         ))}
