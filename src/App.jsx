@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import Navbar from './components/layout/Navbar'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
+import PopupCotizacion from './components/ui/PopupCotizacion'
 // "paginas"
 import Login from './pages/Login'
 import Inicio from './pages/Inicio'
@@ -12,6 +13,7 @@ import QuienesSomos from './pages/QuienesSomos'
 import Administrador from './pages/Administrador'
 import DetalleCamion from './pages/DetalleCamion'
 import Explorar from './pages/Explorar'
+import Cotizacion from './pages/Cotizacion'
 
 import './css/App.css'
 import './css/login.css'
@@ -34,7 +36,10 @@ function App() {
           <Route path='/Administrador' element={<Administrador />} />
           <Route path='/explorar' element={<Explorar />} />
           <Route path='/detalle/:id' element={<DetalleCamion />} />
+          <Route path='/cotizacion' element={<Cotizacion />} />
         </Routes>
+        {/* Popup global para fechas del ítem agregado */}
+        <PopupCotizacion />
         <Footer />          
       </>
     )

@@ -2,3 +2,67 @@
   background-color: #242424;
   /*--bs-body-bg: #ffffff; */ /* al traer bootstrap mediante index.html, este trae bs-body-bg por defecto como blanco, asi que "sobrescribe" */
 }
+
+/* cotizacion y decos */
+.popup-capa {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+}
+.popup-contenido {
+    background: #fff;
+    width: min(560px, 92vw);
+    border-radius: 10px;
+    padding: 24px;
+}
+.popup-check {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #eafaf0;
+    color: #2e7d32;
+    font-size: 32px;
+}
+
+/* carrito */
+.icono-carrito {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #f2f2f2;
+    color: #333;
+    text-decoration: none;
+}
+.icono-carrito .badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #dc3545;
+    color: #fff;
+    border-radius: 999px;
+    padding: 0 6px;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.boton-formulario {
+    background-color: #106FDC;
+    color: #fff;
+    border-radius: 0.5rem;
+}
+
+.boton-formulario:hover {
+    background-color: #0d59af;
+    color: #fff;
+}

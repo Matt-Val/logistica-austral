@@ -1,0 +1,81 @@
+import React from 'react'
+import { useCarrito } from '../context/CarritoContext'
+
+const Cotizacion = () => {
+    const { items, quitarItem } = useCarrito()
+
+    const enviarFormulario = (e) => {
+        e.preventDefault()
+        // ATENCAO por ahora solo muestra una alerta de exito
+        alert('Solicitud de cotización enviada. ¡Te contactaremos pronto!')
+    }
+
+    return (
+        <div className="container my-4">
+            <div className="row g-4">
+                
+                <div className="col-12 col-lg-7">
+                    <h2 className="mb-3">Carro de Cotización</h2>
+                    <p className="text-body-secondary">¡Ya casi terminas tu proceso de solicitud de cotización!</p>
+                    <form className="row g-3" onSubmit={enviarFormulario}>
+                        <div className="col-12 col-md-6">
+                            <label className="form-label">Nombre o Razón Social</label>
+                            <input type="text" className="form-control" required />
+                        </div>
+                        <div className="col-12 col-md-6">
+                            <label className="form-label">RUT</label>
+                            <input type="text" className="form-control" placeholder="12345678-9" />
+                        </div>
+                        <div className="col-12 col-md-6">
+                            <label className="form-label">Número de contacto</label>
+                            <input type="tel" className="form-control" placeholder="Ej: 912345678" required />
+                        </div>
+                        <div className="col-12 col-md-6">
+                            <label className="form-label">E-Mail</label>
+                            <input type="email" className="form-control" placeholder="ejemplo@correo.cl" required />
+                        </div>
+                        <div className="col-12 col-md-6">
+                            <label className="form-label">Región donde opera</label>
+                            <input type="text" className="form-control" placeholder="Selecciona una región" />
+                        </div>
+                        <div className="col-12 col-md-6">
+                            <label className="form-label">Fecha de inicio Estimada</label>
+                            <input type="date" className="form-control" />
+                        </div>
+                            <div className="col-12">
+                            <button className="btn boton-formulario">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div className="col-12 col-lg-5">
+                    <h4 className="mb-3 text-center">Mis Equipos</h4>
+                    {items.length === 0 && (
+                        <p className="text-body-secondary text-center">Aún no tienes equipos en tu carrito.</p>
+                    )}
+                    <div className="d-flex flex-column gap-3">
+                        {items.map((it) => (
+                        <div key={it.id} className="shadow-sm p-3 rounded border bg-white">
+                            <div className="d-flex align-items-center gap-3">
+                                <img src={it.imagen} alt="camion" style={{ width: 72, height: 48, objectFit: 'cover' }} />
+                            <div className="flex-grow-1">
+                                <div className="fw-semibold">
+                                    {it.marca} - {it.nombre}
+                                </div>
+                                <div className="small text-body-secondary">
+                                    {it.meses} meses
+                                </div>
+                                <div className="small">Inicio: {it.fechas.inicio} - Fin: {it.fechas.fin}</div>
+                            </div>
+                                <button className="btn btn-link text-danger" title="Quitar" onClick={() => quitarItem(it.id)}>🗑️</button>
+                            </div>
+                        </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Cotizacion

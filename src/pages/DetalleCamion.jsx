@@ -1,10 +1,13 @@
 import { useParams } from 'react-router-dom'
 import trucks from '../data/camiones'
 import '../css/detalle-camion.css'
+import { useCarrito } from '../context/CarritoContext'
 
 function DetalleCamion() {
     const { id } = useParams()
     const camion = trucks.find(c => String(c.id) === String(id))
+
+    const { agregarItem } = useCarrito()
 
     const {marca, nombre, motor, imagen, lateral, traccion, longitudMax, ejes, peso, descripcion, tipo} = camion
 
@@ -27,7 +30,7 @@ function DetalleCamion() {
                     {descripcion && <p className="mb-4">{descripcion}</p>}
 
                     <div className="d-flex gap-2 mb-3">
-                        <button className="btn btn-primary">Agregar a Cotización</button>
+                        <button className="btn btn-primary" onClick={() => agregarItem(camion)}>Agregar a Cotización</button>
                     </div>
                 </div>
             </div>
