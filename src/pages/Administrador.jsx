@@ -42,6 +42,8 @@ export default function Administrador() {
         navigate("/login", { replace: true });
     };
 
+    
+
     return(
         <main className="admin-bg">
             <div className="admin-container-title">
