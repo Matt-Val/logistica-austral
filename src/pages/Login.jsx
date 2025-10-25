@@ -24,7 +24,7 @@ export default function Login() {
 
             // Verificar si es el usuario administrador
             if (correo === ADMIN_CREDENTIALS.correo && password === ADMIN_CREDENTIALS.password) { 
-                login(ADMIN_CREDENTIALS); // Actualiza el contexto de autenticación
+                login({ ...ADMIN_CREDENTIALS, isAdmin: true }); // Actualiza el contexto de autenticación
                 navigate("/Administrador"); // Redirige a la página de administración
                 return;
             }
@@ -37,7 +37,11 @@ export default function Login() {
 
             if (foundUser) { 
                 login(foundUser); // Actualiza el contexto de autenticación
-                navigate("/Inicio"); // Decidir a que pag ir tras el login.
+                if(foundUser.isAdmin === true) { 
+                    navigate("/Administrador"); // Redirige a la página de administración
+                } else { 
+                    navigate("/Inicio"); // Decidir a que pag ir tras el login.
+                }
             } else { 
                 setError("Correo o contraseña incorrectos.");
             }

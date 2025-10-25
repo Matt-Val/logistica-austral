@@ -1,30 +1,41 @@
 import React, { createContext, useState, useEffect } from "react";
 
-export const AuthContext = createContext();
+export const AuthContext = createContext({
+    user: null,
+    isAuthenticated: false,
+    login: () => {},
+    logout: () => {},
+})
+
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
 
     // rehidratar usuario guardado
     useEffect(() => {
-        const savedUser = localStorage.getItem("user");
-        if (savedUser) setUser(JSON.parse(savedUser)); // Permite que la sesión persista tras recargar
+        const saved = localStorage.getItem("authUser");
+        if (saved) {
+            try { 
+                setUser(JSON.parse(saved));
+            } catch { 
+                localStorage.removeItem("authUser");
+            }
+        }
     }, []);
 
     const login = (userData) => {
         setUser(userData);
-        localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("authUser", JSON.stringify(userData));
     };
 
     const logout = () => {
         setUser(null);
-        localStorage.removeItem("user");
+        localStorage.removeItem("authUser");
     };
 
     // Register: Guarda el usuario en LocalStorage (Lista "USERS"), evita duplicados y hace login automatico
 
     const register = async (userData) => { 
-        
         const users = JSON.parse(localStorage.getItem("users") || "[]");
         const newCorreo = (userData.inputCorreo || "").trim().toLowerCase();
 
@@ -51,8 +62,17 @@ export function AuthProvider({ children }) {
         login(newUser);
         return newUser;
     }
+
+    const value = { 
+        user,
+        isAuthenticated: !!user,
+        login,
+        logout,
+        register,
+    };
+
     return (
-        <AuthContext.Provider value={{ user, login, logout , register}}>
+        <AuthContext.Provider value={value}>
         {children}
         </AuthContext.Provider>
     );

@@ -14,6 +14,7 @@ import Administrador from './pages/Administrador'
 import DetalleCamion from './pages/DetalleCamion'
 import Explorar from './pages/Explorar'
 import Cotizacion from './pages/Cotizacion'
+import AdminCamiones from './pages/AdminCamiones'
 
 import './css/App.css'
 import './css/login.css'
@@ -36,6 +37,7 @@ function App() {
           <Route path='/Administrador' element={<Administrador />} />
           <Route path='/explorar' element={<Explorar />} />
           <Route path='/detalle/:id' element={<DetalleCamion />} />
+          <Route path='/admin-camiones' element={<AdminCamiones />} />
           <Route path='/cotizacion' element={<Cotizacion />} />
         </Routes>
         {/* Popup global para fechas del ítem agregado */}
