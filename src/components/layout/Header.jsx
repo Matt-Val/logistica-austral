@@ -2,10 +2,12 @@ import React from 'react'
 import logo from '../../assets/logo-spread.png'
 import Navbar from './Navbar'
 import { useNavigate } from 'react-router-dom'
+import { useCarrito } from '../../context/CarritoContext'
 
 const Header = () => {
 
     const navegar = useNavigate()
+    const { total } = useCarrito()
     // q, para el valor en si del estado, el que "busca"
     // setQ, lo utilizo para actualizar el estado, lo que escribe el usuario
     const [q, setQ] = React.useState('')
@@ -41,7 +43,12 @@ const Header = () => {
                             <button type="submit" className="btn boton-buscar">Buscar</button>
                         </form>
                     </div>
-                    <div className="col-lg-3 d-none d-lg-block"></div>
+                    <div className="col-lg-3 d-none d-lg-flex justify-content-end align-items-center">
+                        <a href="#" className="icono-carrito" onClick={(e) => { e.preventDefault(); navegar('/cotizacion') }} aria-label="Carrito de cotización">
+                            <span role="img" aria-hidden>🛒</span>
+                            {total > 0 && <span className="badge">{total}</span>}
+                        </a>
+                    </div>
                 </div>
             </div>
             <Navbar />

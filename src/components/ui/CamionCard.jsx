@@ -1,8 +1,13 @@
 import React from "react"
 import { Link } from "react-router-dom" 
+import { useCarrito } from "../../context/CarritoContext"
 
 // ojo con el boton ver detalles, mas adelante se implementa como otro componente generico?
 const CamionCard = ({ camion }) => {
+    
+    const { agregarItem } = useCarrito() // usa el contexto del carrito para obtener la funcion agregarItem a carrito
+    const onAgregar = () => agregarItem(camion) // agrega item actual(la card) de camion
+    
     return(
         <div className="card camion-card shadow-sm">
             <div className="row g-0 align-items-center">
@@ -24,7 +29,7 @@ const CamionCard = ({ camion }) => {
 
                 <div className="col-12 col-md-3 p-3 d-flex flex-column gap-2 justify-content-end align-items-stretch align-items-md-end camion-botones">
                     <Link to={`/detalle/${camion.id}`} className="btn boton-detalles">Ver Detalles</Link>
-                    <button type="button" className="btn boton-cotizar">Agregar a Cotización</button>
+                    <button type="button" className="btn boton-cotizar" onClick={onAgregar}>Agregar a Cotización</button>
                 </div>
             </div>
         </div> 
