@@ -6,6 +6,15 @@ function DetalleCamion() {
     const { id } = useParams()
     const camion = trucks.find(c => String(c.id) === String(id))
 
+    if (!camion) {
+        return (
+            <div className="container py-4 camion-detalle">
+                <h2>Camión no encontrado</h2>
+                <p>El camión solicitado no existe o fue removido.</p>
+            </div>
+        );
+    }
+
     const {marca, nombre, motor, imagen, lateral, traccion, longitudMax, ejes, peso, descripcion, tipo} = camion
 
     return (

@@ -1,10 +1,19 @@
-import { Link } from "react-router-dom"
-import React from "react"
+import React, {useContext} from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { AuthContext } from "../../context/AuthContext"
 
 
 const Navbar = () => {
     // como funcion flecha, nos puede permitir agregar logica adicional, como hooks antes del return
     // y puedemos evitar redefiniciones accidentales, probemos
+    const { isAuthenticated, logout, user } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const handleLogout = () => { 
+        logout();
+        navigate("/");
+    };
+
     return (
         <nav className="py-2 bg-body-tertiary">
             <div className="container d-flex flex-wrap">
@@ -26,25 +35,45 @@ const Navbar = () => {
                         <Link to="#" className="nav-link link-body-emphasis px-8">Contáctanos</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="#" className="nav-link link-body-emphasis px-8">Quiénes Somos</Link>
+                        <Link to="/quienes-somos" className="nav-link link-body-emphasis px-8">Quiénes Somos</Link>
                     </li>
                     <li className="nav-item">
                         <Link to="#" className="nav-link link-body-emphasis px-8">Descargar Catálogo</Link>
                     </li>
                 </ul>
                 
-                <ul className="nav">
-                    <li className="nav-item">
-                        <Link to="/login" className="nav-link link-body-emphasis px-8">Iniciar Sesión</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to="/registro" className="nav-link link-body-emphasis px-8">Registrarse</Link>
-                    </li>
+                <ul className="nav align-items-center">
+                    {isAuthenticated ? (
+                    <>
+                        <li className="nav-item d-flex align-items-center me-2">
+                            <span className="nav-link disabled px-8">
+                                {user?.nombre || user?.correo || user?.email}
+                            </span>
+                        </li>
+                        
+                        <li className="nav-item">
+                            <button
+                                type="button"
+                                className="nav-link link-body-emphasis px-8 btn btn-link p-0"
+                                onClick={handleLogout}
+                            >Cerrar sesión
+                            </button>
+                        </li>
+                    </>
+                    ) : (
+                        <>
+                            <li className="nav-item">
+                                <Link to="/login" className="nav-link link-body-emphasis px-8">Iniciar Sesión</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/registro" className="nav-link link-body-emphasis px-8">Registrarse</Link>
+                            </li>
+                        </>
+                    )}
                 </ul>
             </div>
         </nav>
-    )
+    );
+};
 
-}
-
-export default Navbar
+export default Navbar;

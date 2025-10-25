@@ -122,7 +122,7 @@ export default function Administrador() {
                     <div className="admin-layout">
                         <div className="admin-sidebar">
                             <div className="admin-sidebar-title">Gestión</div>
-                            <button className="admin-nav-btn" onClick={() => navigate("/")}>🚚 Administrar Camiones</button>
+                            <button className="admin-nav-btn" onClick={() => navigate("/admin-camiones")}>🚚 Administrar Camiones</button>
                             <button className="admin-nav-btn" onClick={handleVerArriendos}>📄 Ver Arriendos</button>
                             <button className="admin-nav-btn" onClick={toggleCrearUsuarios}>👤 Crear Usuarios</button>
                             <hr/>
@@ -135,7 +135,8 @@ export default function Administrador() {
                                     <h2 className="text-black bold mb-3">Crear usuario administrador</h2>
                                     <button type="button" className="btn-cerrar" onClick={toggleCrearUsuarios}></button>
                                 </div>
-                                    <p className="text-secondary mb-3">Ingrese correo y contraseña para crear una cuenta con privilegios de administrador.</p>
+                                    <p className="text-secondary mb-3">Ingrese correo y contraseña para crear una cuenta con privilegios de administrador.
+                                    </p>
                                 <form className="admin-form" onSubmit={handleCrearAdmin}>
                                     <div className="mb-3">
                                         <label className="text-grande-formulario">Correo</label>
