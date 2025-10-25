@@ -12,6 +12,7 @@ import QuienesSomos from './pages/QuienesSomos'
 import Administrador from './pages/Administrador'
 import DetalleCamion from './pages/DetalleCamion'
 import Explorar from './pages/Explorar'
+import AdminCamiones from './pages/AdminCamiones'
 
 import './css/App.css'
 import './css/login.css'
@@ -34,6 +35,7 @@ function App() {
           <Route path='/Administrador' element={<Administrador />} />
           <Route path='/explorar' element={<Explorar />} />
           <Route path='/detalle/:id' element={<DetalleCamion />} />
+          <Route path='/admin-camiones' element={<AdminCamiones />} />
         </Routes>
         <Footer />          
       </>
