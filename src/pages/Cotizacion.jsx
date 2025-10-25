@@ -1,6 +1,14 @@
 import React from 'react'
 import { useCarrito } from '../context/CarritoContext'
 
+const REGIONES_CHILE = [
+    'Valparaíso',
+    'Metropolitana de Santiago',
+    'La Araucanía',
+    'Aysén del Gral. Carlos Ibáñez del Campo',
+    'Magallanes y de la Antártica Chilena',
+]
+
 const Cotizacion = () => {
     const { items, quitarItem } = useCarrito()
 
@@ -20,10 +28,16 @@ const Cotizacion = () => {
         setErr('')
 
         // Validaciones similares a Registro.jsx (adaptadas)
-        const { nombre, rut, telefono, email, fechaInicio } = form
+        const { nombre, rut, telefono, email, region, fechaInicio } = form
 
-        if (!nombre || !rut || !telefono || !email || !fechaInicio) {
+        if (!nombre || !rut || !telefono || !email || !region || !fechaInicio) {
             setErr('Por favor, complete todos los campos requeridos.')
+            return
+        }
+
+        // validacion sencilla: debe seleccionar una region (no string vacio)
+        if (!REGIONES_CHILE.includes(region)) {
+            setErr('Seleccione una región válida.')
             return
         }
 
@@ -88,11 +102,16 @@ const Cotizacion = () => {
                         </div>
                         <div className="col-12 col-md-6">
                             <label className="form-label">Región donde opera</label>
-                            <input type="text" className="form-control" name="region" value={form.region} onChange={onChange} placeholder="Selecciona una región" />
+                            <select className="form-select" name="region" value={form.region} onChange={onChange} required>
+                                <option value="" disabled>Seleccione una región</option>
+                                {REGIONES_CHILE.map(region => (
+                                    <option key={region} value={region}>{region}</option>
+                                ))}
+                            </select>
                         </div>
                         <div className="col-12 col-md-6">
                             <label className="form-label">Fecha de inicio Estimada</label>
-                            <input type="date" className="form-control" name="fechaInicio" value={form.fechaInicio} onChange={onChange} min={new Date().toISOString().slice(0,10)} />
+                            <input type="date" className="form-control" name="fechaInicio" value={form.fechaInicio} onChange={onChange} min={new Date().toISOString().slice(0,10)} required/>
                         </div>
                         {err && (
                             <div className="col-12">
