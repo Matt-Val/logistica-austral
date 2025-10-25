@@ -109,6 +109,9 @@ export default function Administrador() {
         setAdminPassword("");
     }
 
+    const toggleCrearUsuarios = () => { 
+        setView((prev) => (prev === "crearUsuarios" ? "inicio" : "crearUsuarios"))
+    }
 
     return(
         <main className="admin-bg">
@@ -121,18 +124,18 @@ export default function Administrador() {
                             <div className="admin-sidebar-title">Gestión</div>
                             <button className="admin-nav-btn" onClick={() => navigate("/")}>🚚 Administrar Camiones</button>
                             <button className="admin-nav-btn" onClick={handleVerArriendos}>📄 Ver Arriendos</button>
-                            <button className="admin-nav-btn" onClick={() => setView("crearUsuarios")}>👤 Crear Usuarios</button>
+                            <button className="admin-nav-btn" onClick={toggleCrearUsuarios}>👤 Crear Usuarios</button>
                             <hr/>
                             <button className="admin-nav-btn admin-nav-danger" onClick={handleLogout}>⎋ Cerrar sesión</button>
                         </div>
 
-                        {/* Panel derecho: solo se muestra al pulsar "Crear Usuarios" */}
                         {view === "crearUsuarios" && (
                             <div className="admin-content">
-                                <h2 className="text-black bold mb-3">Crear usuario administrador</h2>
-                                <p className="text-secondary mb-3">
-                                    Ingrese correo y contraseña para crear una cuenta con privilegios de administrador.
-                                </p>
+                                <div className="d-flex justify-content-between align-items-start">
+                                    <h2 className="text-black bold mb-3">Crear usuario administrador</h2>
+                                    <button type="button" className="btn-cerrar" onClick={toggleCrearUsuarios}></button>
+                                </div>
+                                    <p className="text-secondary mb-3">Ingrese correo y contraseña para crear una cuenta con privilegios de administrador.</p>
                                 <form className="admin-form" onSubmit={handleCrearAdmin}>
                                     <div className="mb-3">
                                         <label className="text-grande-formulario">Correo</label>
