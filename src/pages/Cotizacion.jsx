@@ -19,7 +19,7 @@ const Cotizacion = () => {
         rut: '',
         telefono: '',
         email: '',
-        region: '', // sin validacion por ahora
+        region: '',
         fechaInicio: ''
     })
     const [err, setErr] = React.useState('')
@@ -28,7 +28,7 @@ const Cotizacion = () => {
         e.preventDefault()
         setErr('')
 
-        // Validaciones similares a Registro.jsx (adaptadas)
+        // Validaciones como es debido sss
         const { nombre, rut, telefono, email, region, fechaInicio } = form
 
         if (!nombre || !rut || !telefono || !email || !region || !fechaInicio) {
@@ -84,26 +84,62 @@ const Cotizacion = () => {
                 <div className="col-12 col-lg-7">
                     <h2 className="mb-3">🛒 Carro de Cotización</h2>
                     <p className="text-body-secondary">¡Ya casi terminas tu proceso de solicitud de cotización!</p>
-                    <form className="row g-3" onSubmit={enviarFormulario}>
+                    <form className="row g-3" onSubmit={enviarFormulario} noValidate>
                         <div className="col-12 col-md-6">
-                            <label className="form-label">Nombre o Razón Social</label>
-                            <input type="text" className="form-control" name="nombre" value={form.nombre} onChange={onChange} required />
+                            <label className="form-label" htmlFor="nombre-input">Nombre o Razón Social</label>
+                            <input 
+                                id="nombre-input" 
+                                type="text" 
+                                className="form-control" 
+                                name="nombre" 
+                                value={form.nombre} 
+                                onChange={onChange} 
+                                required />
                         </div>
                         <div className="col-12 col-md-6">
-                            <label className="form-label">RUT</label>
-                            <input type="text" className="form-control" name="rut" value={form.rut} onChange={onChange} placeholder="12345678-9" />
+                            <label className="form-label" htmlFor="rut-input">RUT</label>
+                            <input 
+                                id="rut-input" 
+                                type="text" 
+                                className="form-control" 
+                                name="rut" 
+                                value={form.rut} 
+                                onChange={onChange} 
+                                placeholder="12345678-9" />
                         </div>
                         <div className="col-12 col-md-6">
-                            <label className="form-label">Número de contacto</label>
-                            <input type="tel" className="form-control" name="telefono" value={form.telefono} onChange={onChange} placeholder="Ej: 912345678" required />
+                            <label className="form-label" htmlFor="telefono-input">Número de contacto</label>
+                            <input 
+                                id="telefono-input" 
+                                type="tel" 
+                                className="form-control" 
+                                name="telefono" 
+                                value={form.telefono} 
+                                onChange={onChange} 
+                                placeholder="Ej: 912345678" 
+                                required />
                         </div>
                         <div className="col-12 col-md-6">
-                            <label className="form-label">E-Mail</label>
-                            <input type="email" className="form-control" name="email" value={form.email} onChange={onChange} placeholder="ejemplo@correo.cl" required />
+                            <label className="form-label" htmlFor="email-input">E-Mail</label>
+                            <input 
+                                id="email-input" 
+                                type="email" 
+                                className="form-control" 
+                                name="email" 
+                                value={form.email} 
+                                onChange={onChange} 
+                                placeholder="ejemplo@correo.cl" 
+                                required />
                         </div>
                         <div className="col-12 col-md-6">
-                            <label className="form-label">Región donde opera</label>
-                            <select className="form-select" name="region" value={form.region} onChange={onChange} required>
+                            <label className="form-label" htmlFor="region-select">Región donde opera</label>
+                            <select 
+                                id="region-select" 
+                                className="form-select" 
+                                name="region" 
+                                value={form.region} 
+                                onChange={onChange} 
+                                required>
                                 <option value="" disabled>Seleccione una región</option>
                                 {REGIONES_CHILE.map(region => (
                                     <option key={region} value={region}>{region}</option>
@@ -111,8 +147,16 @@ const Cotizacion = () => {
                             </select>
                         </div>
                         <div className="col-12 col-md-6">
-                            <label className="form-label">Fecha de inicio Estimada</label>
-                            <input type="date" className="form-control" name="fechaInicio" value={form.fechaInicio} onChange={onChange} min={new Date().toISOString().slice(0,10)} required/>
+                            <label className="form-label" htmlFor="fechaInicio-input">Fecha de inicio Estimada</label>
+                            <input 
+                                id="fechaInicio-input" 
+                                type="date" 
+                                className="form-control" 
+                                name="fechaInicio" 
+                                value={form.fechaInicio} 
+                                onChange={onChange} 
+                                min={new Date().toISOString().slice(0,10)} 
+                                required/>
                         </div>
                         {err && (
                             <div className="col-12">
