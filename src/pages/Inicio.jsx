@@ -26,9 +26,6 @@ function Inicio() {
                                 a nuestra flota. Nuestro soporte estará listo para apoyarte y dar con la solución para tu proyecto.
                                 A lo largo de Chile, Logística Austral ha logrado completar más de 700.000KM con nuestra excelente flota.
                             </p>
-                            <button type="button" className="btn btn-lg boton-per">
-                                Encuéntranos
-                            </button>
                         </div>
                     </div>
                 </div>

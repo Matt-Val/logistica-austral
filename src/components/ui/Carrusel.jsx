@@ -1,6 +1,7 @@
 import React from 'react'
 import camionInicio from '../../assets/img/scania-fr.png'
 import fondoInicio from '../../assets/img/bg-1-bl.jpg'
+import { Link } from "react-router-dom"
 
 // este es el carrusel de bienvenida, contiene el llamado a la accion
 const Carrusel = () => {
@@ -17,7 +18,7 @@ const Carrusel = () => {
                                             <h1>CAMIONES ÚNICOS</h1>
                                             <h1>PARA TUS NECESIDADES</h1>
                                             <p>Una flota moderna y confiable. Los mejores camiones para trabajos livianos y complejos.</p>
-                                            <p><a className="btn btn-lg boton-per" href="explorar.html">Ver Camiones</a></p>
+                                            <Link to="/explorar" className="btn btn-lg boton-per">Ver Camiones</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -27,7 +28,7 @@ const Carrusel = () => {
                                             <h1>CALIDAD</h1>
                                             <h1>EN TODO MOMENTO</h1>
                                             <p>Logística Austral cuenta con trabajadores certificados dedicados al cuidado total de nuestra flota. Garantizando seguridad y excelencia.</p>
-                                            <p><a className="btn btn-lg boton-per" href="explorar.html">Ver Camiones</a></p>
+                                            <Link to="/explorar" className="btn btn-lg boton-per">Ver Camiones</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -37,7 +38,7 @@ const Carrusel = () => {
                                             <h1>SOPORTE</h1>
                                             <h1>PERSONALIZADO</h1>
                                             <p>Logística Austral te acompaña para dar soluciones rápidas para lo que necesites.</p>
-                                            <p><a className="btn btn-lg boton-per" href="#">Cotizar</a></p>
+                                            <Link to="/cotizacion" className="btn btn-lg boton-per">Cotizar</Link>
                                         </div>
                                     </div>
                                 </div>
