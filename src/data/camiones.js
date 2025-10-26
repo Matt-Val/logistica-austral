@@ -6,7 +6,7 @@ import volvo500 from '../assets/card/volvo-fh500.jpg'
 import mercedes2545 from '../assets/card/actros-2545.jpg'
 import mercedes3336 from '../assets/card/actros-3336-rampla.jpg'
 
-import testside from '../assets/card/side330.jpg'
+import testside from '../assets/card/side330tb.png'
 
 // aqui manejamos temporalmente los camiones disponibles para arriendo
 const trucks = [
@@ -19,9 +19,9 @@ const trucks = [
         imagen: scania770,
         lateral: testside,
         traccion: "8x4/4 midlift",
-        longitudMax: "12.0 m",
+        longitudMax: 12,
         ejes: 4,
-        peso: "23T",
+        peso: 23,
         tipo: "tracto"
     },
     {
@@ -33,9 +33,9 @@ const trucks = [
         imagen: scaniap320,
         lateral: testside,
         traccion: "4x2",
-        longitudMax: "14.5 m",
+        longitudMax: 19.5,
         ejes: 2,
-        peso: "12T",
+        peso: 12,
         tipo: "rigido"
     },
     {
@@ -47,9 +47,9 @@ const trucks = [
         imagen: renault480,
         lateral: testside,
         traccion: "4x2",
-        longitudMax: "12.2 m",
+        longitudMax: 12.2,
         ejes: 2,
-        peso: "18T",
+        peso: 18,
         tipo: "tracto"
     },
     {
@@ -61,9 +61,9 @@ const trucks = [
         imagen: volvo500,
         lateral: testside,
         traccion: "4x2",
-        longitudMax: "12.0 m",
+        longitudMax: 12,
         ejes: 2,
-        peso: "20T",
+        peso: 20,
         tipo: "tracto"
     },
     {
@@ -75,9 +75,9 @@ const trucks = [
         imagen: mercedes2545,
         lateral: testside,
         traccion: "6x2 taglift",
-        longitudMax: "13.8 m",
+        longitudMax: 18.8,
         ejes: 3,
-        peso: "19T",
+        peso: 19,
         tipo: "rigido"                               
     },
     {
@@ -89,9 +89,9 @@ const trucks = [
         imagen: mercedes3336,
         lateral: testside,
         traccion: "6x4",
-        longitudMax: "10.5 m",
+        longitudMax: 10.5,
         ejes: 3,
-        peso: "21T",
+        peso: 21,
         tipo: "tolva"                                   
     }
 ]

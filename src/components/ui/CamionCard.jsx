@@ -21,9 +21,9 @@ const CamionCard = ({ camion }) => {
                     <p className="mb2 small text-body-secondary">Tipo: {camion.tipo}</p>
                     <ul className="camion-espec mb-0">
                         <li><span>Tracción:</span> {camion.traccion}</li>
-                        <li><span>Longitud máx:</span> {camion.longitudMax}</li>
+                        <li><span>Longitud máx:</span> {camion.longitudMax} mt</li>
                         <li><span>Ejes:</span> {camion.ejes}</li>
-                        <li><span>Peso:</span> {camion.peso}</li>
+                        <li><span>Peso:</span> {camion.peso} T</li>
                     </ul>
                 </div>
 

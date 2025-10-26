@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { Link } from "react-router-dom"
 import marcas from '../../assets/img/marcas.png'
 import logo from '../../assets/logo-spread-black.png'
 
@@ -7,6 +8,7 @@ import logo from '../../assets/logo-spread-black.png'
 const Footer = () => {
     return(
         <footer>
+        <div className="footer-box">
             <div className="d-flex justify-content-center border-top">
                 <img src={marcas} className="img-fluid" alt="" style={{ maxWidth: '500px' }}/>
             </div>
@@ -19,16 +21,11 @@ const Footer = () => {
                 </a>
                 <ul className="nav col-md-4 justify-content-end">
                     <li className="nav-item">
-                        <a href="/" className="nav-link link-body-emphasis px-8e">Contáctanos</a>
-                    </li>
-                    <li className="nav-item">
-                        <a href="/" className="nav-link link-body-emphasis px-8">FAQs</a>
-                    </li>
-                    <li className="nav-item">
-                        <a href="/QuienesSomos" className="nav-link link-body-emphasis px-8 ">Quiénes Somos</a>
+                       <Link to="/quienes-somos" className="nav-link link-body-emphasis px-8">Quiénes Somos</Link>
                     </li>
                 </ul>
             </div>
+        </div>
         </footer>
     )
 }
