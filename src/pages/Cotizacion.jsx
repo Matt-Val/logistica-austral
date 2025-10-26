@@ -1,5 +1,6 @@
 import React from 'react'
 import { useCarrito } from '../context/CarritoContext'
+import Carrito from '../components/ui/Carrito'
 
 const REGIONES_CHILE = [
     'Valparaíso',
@@ -124,31 +125,7 @@ const Cotizacion = () => {
                     </form>
                 </div>
 
-                <div className="col-12 col-lg-5">
-                    <h4 className="mb-3 text-center">Mis Equipos</h4>
-                    {items.length === 0 && (
-                        <p className="text-body-secondary text-center">Aún no tienes equipos en tu carrito.</p>
-                    )}
-                    <div className="d-flex flex-column gap-3">
-                        {items.map((it) => (
-                        <div key={it.lineaId ?? it.id} className="shadow-sm p-3 rounded border bg-white">
-                            <div className="d-flex align-items-center gap-3">
-                                <img src={it.imagen} alt="camion" style={{ width: 72, height: 48, objectFit: 'cover' }} />
-                            <div className="flex-grow-1">
-                                <div className="fw-semibold">
-                                    {it.marca} - {it.nombre}
-                                </div>
-                                <div className="small text-body-secondary">
-                                    {it.meses} meses
-                                </div>
-                                <div className="small">Inicio: {it.fechas.inicio} - Fin: {it.fechas.fin}</div>
-                            </div>
-                                <button className="btn btn-link text-danger" title="Quitar" onClick={() => quitarItem(it.lineaId ?? it.id)}>🗑️</button>
-                            </div>
-                        </div>
-                        ))}
-                    </div>
-                </div>
+                <Carrito />
             </div>
         </div>
     )
