@@ -5,6 +5,7 @@ import CamionLista from '../components/ui/CamionLista';
 import '../css/explorar.css'
 import { useSearchParams } from 'react-router-dom';
 import camiones from '../data/camiones.js'
+import {camionService } from '../data/camionService.js';
 
 // Apartado para mostrar camiones disponibles para explorar
 // Clave usada por AdminCamiones para persistir disponibilidad en localStorage.
@@ -35,6 +36,20 @@ function Explorar() {
     const [parametros] = useSearchParams() // arreglo para parametros url (?tipo, ?q)
     const tipo = (parametros.get('tipo') || '').toLowerCase()   // tipo de camion OR cadena vacia si null o undefined
     const q = (parametros.get('q') || '').toLowerCase().trim()  // busqueda "avanzada"
+
+    const [camiones, setCamiones] = useState([]);
+    useEffect( () => { 
+        const cargarCamiones = async () => {
+            try { 
+                const data = await camionService.getAllCamiones();
+                setCamiones(data);
+        
+            } catch (error) { 
+                console.error("Error al cargar camiones: ", error);
+            }
+        }
+        cargarCamiones();
+    }, []); // el array vacio asegura que solo se ejecute una vez al montar el componente.
 
     // Fuerza a recarga de disponibilidad al cambiar storage (otra pestaña)
     const [tick, setTick] = useState(0); // estado para forzar recarga de disponibilidad

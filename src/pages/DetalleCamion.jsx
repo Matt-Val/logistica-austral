@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom'
 import trucks from '../data/camiones'
 import '../css/detalle-camion.css'
 import { useCarrito } from '../context/CarritoContext'
+import { camionService} from '../data/camionService.js';
 
 function DetalleCamion() {
     const { id } = useParams()
