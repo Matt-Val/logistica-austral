@@ -1,14 +1,35 @@
-import { useParams } from 'react-router-dom'
-import trucks from '../data/camiones'
 import '../css/detalle-camion.css'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { useCarrito } from '../context/CarritoContext'
 import { camionService} from '../data/camionService.js';
 
 function DetalleCamion() {
     const { id } = useParams()
-    const camion = trucks.find(c => String(c.id) === String(id))
-
     const { agregarItem } = useCarrito()
+
+    // Estado para guardar el camion que se busca
+    const [camion, setCamion] = useState(null);
+    const [error, setError] = useState(false);
+
+    useEffect( () => {
+        const cargarCamion = async () => { 
+            try { 
+                // Se llama al backend pidiendo el camion por su ID.
+                const data = await camionService.getCamion(id);
+                setCamion(data);
+            } catch (error) { 
+                console.error("Error al obtener el camión:", error);
+                setError(true);
+            }
+        };
+        cargarCamion();
+    }, [id]);
+
+    // Mientra mensajes de carga mientras llega la info a AWS.
+    if (error) return <div className="container py-5 text-center">Error al cargar el camión. Por favor intenta nuevamente.</div>
+    if (!camion) return <div className="container py-5 text-center">Cargando detalles del camión...</div>
+    
 
     const {marca, nombre, motor, imagen, lateral, traccion, longitudMax, ejes, peso, descripcion, tipo} = camion
 
