@@ -2,7 +2,7 @@ import '../css/detalle-camion.css'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useCarrito } from '../context/CarritoContext'
-import { camionService} from '../data/camionService.js';
+import { camionService} from '../services/camionService.js';
 
 function DetalleCamion() {
     const { id } = useParams()

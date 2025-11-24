@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://100.25.39.68:8080/api/camiones";
+const BASE_URL = "http://3.208.33.39:8080/api/camiones"; // IP Elastica
 
 /*
     Funcion auxiliar para traducir de backend al front.

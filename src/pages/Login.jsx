@@ -22,31 +22,20 @@ export default function Login() {
 
         try{ 
 
-            // Verificar si es el usuario administrador
-            if (correo === ADMIN_CREDENTIALS.correo && password === ADMIN_CREDENTIALS.password) { 
-                login({ ...ADMIN_CREDENTIALS, isAdmin: true }); // Actualiza el contexto de autenticación
-                navigate("/Administrador"); // Redirige a la página de administración
-                return;
-            }
-            
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            // Llamamos a login pasando los datos directamente
+            // El context se encarga de hablar con el nackend y validar
+            const usuarioLogeado = await login(correo, password);
 
-            const foundUser = users.find(
-                (u) => (u.correo === correo || u.email === correo) && u.password === password
-            );
-
-            if (foundUser) { 
-                login(foundUser); // Actualiza el contexto de autenticación
-                if(foundUser.isAdmin === true) { 
-                    navigate("/Administrador"); // Redirige a la página de administración
-                } else { 
-                    navigate("/Inicio"); // Decidir a que pag ir tras el login.
-                }
+            // Redirigimos segun el rol que nos devolvió el contexto.
+            if (usuarioLogeado.isAdmin) { 
+                navigate("/Administrador")
             } else { 
-                setError("Correo o contraseña incorrectos.");
+                navigate("/Inicio")
             }
+
         } catch (err) {
-            setError("Error al iniciar sesión. Por favor, intente nuevamente.");
+            console.error(err)
+            setError("Correo o contraseña incorrectos.");
             return;
         }
     }

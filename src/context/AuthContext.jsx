@@ -1,10 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
 
+import { authService } from "../services/authService";
+
 export const AuthContext = createContext({
     user: null,
     isAuthenticated: false,
     login: () => {},
     logout: () => {},
+    register: () => {}
 })
 
 
@@ -23,45 +26,68 @@ export function AuthProvider({ children }) {
         }
     }, []);
 
-    const login = (userData) => {
-        setUser(userData);
-        localStorage.setItem("authUser", JSON.stringify(userData));
+    // Login
+    const login = async (correo, password) => { 
+
+        if (correo === "javier.pena@logistica.com" && password === "admin1234"){ 
+            const adminUser = {
+                nombre: "Javier Admin",
+                correo,
+                isAdmin: true 
+            };
+            setUser(adminUser);
+            localStorage.setItem("authUser", JSON.stringify(adminUser));
+            return adminUser;
+        }
+
+        try { 
+            // Se llama al backend
+            const usuario = await authService.login(correo, password);
+
+            // Se adapta al front.
+            const usuarioSesion = { 
+                id: usuario.idUsuario,
+                nombre: usuario.nombreUsuario,
+                correo: usuario.correoUsuario,
+                isAdmin: usuario.esAdmin
+            };
+
+            // Guardamos el estado y localstorage
+            setUser(usuarioSesion);
+            localStorage.setItem("authUser", JSON.stringify(usuarioSesion));
+            return usuarioSesion;
+        } catch (error) { 
+            console.error("Error en login: ", error);
+            throw new Error("Credenciales incorrectas o error de conexion.");
+        }
     };
 
-    const logout = () => {
+    // Register:
+    const register = async (formData) => { 
+        try { 
+            const nuevoUsuario = await authService.register(formData);
+
+            // Auto-Login despues de un registro exitoso
+            const usuarioSesion = { 
+                id: nuevoUsuario.idUsuario,
+                nombre: nuevoUsuario.nombreUsuario,
+                correo: nuevoUsuario.correoUsuario,
+                isAdmin: false
+            };
+
+            setUser(usuarioSesion);
+            localStorage.setItem("authUser", JSON.stringify(usuarioSesion));
+            return usuarioSesion;
+        } catch (error) { 
+            console.error("Error en registro: ", error);
+            throw new Error("Error al registrar. Verifique que el RUT o Correo no existan.");
+        }
+    }
+
+    const logout = () => { 
         setUser(null);
         localStorage.removeItem("authUser");
     };
-
-    // Register: Guarda el usuario en LocalStorage (Lista "USERS"), evita duplicados y hace login automatico
-
-    const register = async (userData) => { 
-        const users = JSON.parse(localStorage.getItem("users") || "[]");
-        const newCorreo = (userData.inputCorreo || "").trim().toLowerCase();
-
-        // Verificar si el correo ya está registrado
-        const duplicate = users.find(
-            (u) => (u.correo || u.email || "").trim().toLowerCase() === newCorreo
-        );
-        if (duplicate) {
-            throw new Error("El correo ya está registrado.");
-        }
-
-        const newUser = { 
-            nombre: (userData.inputNombre || "").trim(),
-            rut: (userData.inputRut || "").trim(),
-            correo: newCorreo,
-            telefono: (userData.inputTelefono || "").trim(),
-            password: userData.inputPassword || ""
-        };
-
-        users.push(newUser);
-        localStorage.setItem("users", JSON.stringify(users));
-
-        // Login automático tras registro
-        login(newUser);
-        return newUser;
-    }
 
     const value = { 
         user,

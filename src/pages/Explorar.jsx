@@ -4,8 +4,7 @@ import CamionLista from '../components/ui/CamionLista';
 
 import '../css/explorar.css'
 import { useSearchParams } from 'react-router-dom';
-import camiones from '../data/camiones.js'
-import {camionService } from '../data/camionService.js';
+import {camionService } from '../services/camionService.js';
 
 // Apartado para mostrar camiones disponibles para explorar
 // Clave usada por AdminCamiones para persistir disponibilidad en localStorage.
