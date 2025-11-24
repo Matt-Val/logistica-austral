@@ -31,7 +31,7 @@ export function AuthProvider({ children }) {
 
         if (correo === "javier.pena@logistica.com" && password === "admin1234"){ 
             const adminUser = {
-                nombre: "Javier Admin",
+                nombre: "Javier Pena ADM",
                 correo,
                 isAdmin: true 
             };

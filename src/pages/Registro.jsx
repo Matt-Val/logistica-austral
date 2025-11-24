@@ -27,30 +27,49 @@ export default function Registro() {
         e.preventDefault();
         setErr("");
 
+        
+        // Validar campos vacios
+        if (!form.inputNombre || !form.inputRut || !form.inputCorreo || !form.inputTelefono || !form.inputPassword || !form.inputConfirmPassword) {
+            setErr("Por favor, complete todos los campos.");
+            return;
+        }
+
+        // Validar el rut (formato basico)
+        // Debe tener un guion y un largo normal (ej: 12.345.678-9 son 12 caracteres)
+        if (!form.inputRut.includes("-") || form.inputRut.length > 12 || form.inputRut.length < 8 ) { 
+            setErr("El RUT debe tener un formato válido (ej: 12.345.678-9).");
+            return;
+        }
+
+        // Validacion de correo
+        if (!form.inputCorreo.includes("@") || !form.inputCorreo.includes(".")) {
+            setErr("Por favor, ingrese un correo válido");
+            return;
+        }
+
+        // Validacion de telefono (numeros y largo)
+        const telefonoNum = form.inputTelefono.replace(/\D/g, ''); // Elimina todo lo que no sea numero
+        if (telefonoNum.length < 9) { 
+            setErr("El teléfono debe tener al menos 9 dígitos.");
+            return;
+        }
+
+        // Validacion de contraseñas
+        if (form.inputPassword.length < 8) {
+            setErr("La contraseña debe tener al menos 8 caracteres.");
+            return;
+        }
+
+        if (form.inputPassword !== form.inputConfirmPassword) {
+            setErr("Las contraseñas no coinciden.");
+            return;
+        }
+
         try {
-            if (!form.inputNombre || !form.inputRut || !form.inputCorreo || !form.inputTelefono || !form.inputPassword || !form.inputConfirmPassword) {
-                setErr("Por favor, complete todos los campos.");
-                return;
-            }
-
-            if (!form.inputCorreo.includes("@") || !form.inputCorreo.includes(".")) {
-                setErr("Por favor, ingrese un correo válido");
-                return;
-            }
-
-            if (form.inputPassword.length < 8) {
-                setErr("La contraseña debe tener al menos 8 caracteres.");
-                return;
-            }
-
-            if (form.inputPassword !== form.inputConfirmPassword) {
-                setErr("Las contraseñas no coinciden.");
-                return;
-            }
-
             await register(form);
             alert("Registro exitoso!");
-            nav("/Inicio");
+            nav("/Explorar");
+
         } catch (error) { 
             console.error("Error en registro:", error);
             setErr(error.message || "Error al registrarse.");
