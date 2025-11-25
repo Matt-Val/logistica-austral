@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext"; 
+import { authService } from "../services/authService";
 
 const ADMIN_EMAIL = "javier.pena@logistica.com"
 
@@ -13,55 +14,32 @@ export default function Administrador() {
         return <Navigate to="/login" replace />;
     }
 
+    // validacion de admin
     const normalized = String(user.correo || user.email || "").toLowerCase();
     const isAdmin = user?.isAdmin === true || normalized === ADMIN_EMAIL;
     if (!isAdmin) { 
         return <Navigate to="/login" replace />;
     }
 
-    // 2.- Estado de la Lista de usuarios y vista actual
-    const [users, setUsers] = useState([]);
-    const [view, setView] = useState("inicio"); 
-
-    // 3.- Estados del formulario de creación de administradores.
-    const [adminEmail, setAdminEmail] = useState("");
-    const [adminPassword, setAdminPassword] = useState("");
-    const [formError, setFormError] = useState("");
-    const [formOk, setFormOk] = useState("");
-
-
-    useEffect(() => {
-        try { 
-            const storedUsers = JSON.parse(localStorage.getItem('users') || '[]');
-            setUsers(Array.isArray(storedUsers) ? storedUsers : []);
-        } catch (e)  { 
-            setUsers([]);
-        }
-    }, []);
+    const [ formError, setFormError] = useState("");
+    const [ formOk, setFormOk] = useState("");
 
     const handleLogout = () => { 
-        try { 
-            logout();
-        } catch (e) {
-            console.error("Error al cerrar sesión:", e);
-        }
-        navigate("/login", { replace: true });
+        logout();
+        navigate("/login", { replace: true});
     };
 
-        const handleVerArriendos = () => { 
+    const handleVerArriendos = () => { 
         window.alert("Esta funcionalidad está en mantenimiento, disculpe las molestias.");
     }
 
-    const handleCrearAdmin = (e) => {
+    const handleCrearAdmin = async (e) => {
         e.preventDefault();
         setFormError("");
         setFormOk("");
 
-        const email = adminEmail.trim().toLowerCase();
-        const pass = adminPassword || "";
-
         //Validaciones básicas
-        if (!email || !pass) { 
+        if (!form.inputNombre || !form.inputRut || !form.inputCorreo || !form.inputPassword) { 
             setFormError("Por favor, complete todos los campos.");
             return;
         }
@@ -73,46 +51,28 @@ export default function Administrador() {
             setFormError("La contraseña debe tener al menos 8 caracteres,");
         }
 
-        // Cargar y verificar duplicados
-        let currentUsers = [];
         try { 
-            currentUsers = JSON.parse(localStorage.getItem("users") || "[]");
-            if (!Array.isArray(currentUsers)) currentUsers = [];
-        } catch { 
-            currentUsers = [];
+            // Usamos el authService directo para que NO inicie sesion automaticamente
+            await authService.register(form);
+
+            setFormOk("Usuario administrador creado exitosamente.");
+            // Limpiar el formulario
+            setFormError({ 
+                inputNombre: "",
+                inputRut: "",
+                inputTelefono: "",
+                inputCorreo: "",
+                inputPassword: ""
+            });
+        } catch (error) { 
+            console.error("Error al crear usuario admin: ", error);
+            setFormError("Error al crear usuario administrador. Verifique que el RUT o Correo no existan.");
         }
-
-        const exists = currentUsers.find(
-            (u) => String(u.correo || u.email || "").trim().toLowerCase() === email
-        );
-        if (exists) { 
-            setFormError("Ya existe un usuario con ese correo electrónico.");
-            return;
-        }
-
-        // Crear un nuevo usuario administrador
-        const newAdmin = { 
-            correo : email,
-            password : pass,
-            isAdmin : true,
-            nombre : "",
-            rut : "",
-            telefono : "",
-        };
-
-        currentUsers.push(newAdmin);
-        localStorage.setItem("users", JSON.stringify(currentUsers));
-        setUsers(currentUsers);
-
-        setFormOk("Usuario administrador creado exitosamente.");
-        setAdminEmail("");
-        setAdminPassword("");
     }
 
     const toggleCrearUsuarios = () => { 
-        setView((prev) => (prev === "crearUsuarios" ? "inicio" : "crearUsuarios"))
+        setView( (prev) => (prev === "crearUsuarios" ? "inicio" : "crearUsuarios"));
     }
-
     return(
         <main className="admin-bg">
             <div className="admin-container-title">
@@ -138,25 +98,58 @@ export default function Administrador() {
                                     <p className="text-secondary mb-3">Ingrese correo y contraseña para crear una cuenta con privilegios de administrador.
                                     </p>
                                 <form className="admin-form" onSubmit={handleCrearAdmin}>
-                                    <div className="mb-3">
-                                        <label className="text-grande-formulario">Correo</label>
-                                        <input
-                                            type="email"
-                                            className="form-control"
-                                            placeholder="admin@empresa.com"
-                                            value={adminEmail}
-                                            onChange={(e) => setAdminEmail(e.target.value)}
+
+
+                                    <div className="mb-2">
+                                            <label className="text-grande-formulario">Nombre Completo</label>
+                                            <input type="text" 
+                                                className="form-control form-control-ssm" 
+                                                name="inputNombre" 
+                                                value={form.inputNombre}
+                                                onChange={handleInput}
+                                            />
+                                    </div>
+
+                                    <div className="row mb-2">
+                                        <div className="col-6">
+                                            <label className="text-grande-formulario">RUT</label>
+                                            <input type="text" 
+                                                className="form-control form-control-sm"
+                                                name="inputRut"
+                                                value={form.inputRut}
+                                                onChange={handleInput}
+                                                placeholder="12.345.678-9"
+                                            />
+                                        </div>
+
+                                        <div className="col-6">
+                                            <label className="text-grande-formulario">Fono</label>
+                                            <input type="text" 
+                                                className="form-control form-control-sm" 
+                                                name="inputTelefono"
+                                                value={form.inputTelefono}
+                                                onChange={handleInput}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="mb-2">
+                                        <label className="texto-grande-formulario">Correo</label>
+                                        <input type="email" 
+                                            className="form-control form-control-sm"
+                                            name="inputCorreo"
+                                            value={form.inputCorreo}
+                                            onChange={handleInput}
                                         />
                                     </div>
 
                                     <div className="mb-3">
                                         <label className="text-grande-formulario">Contraseña</label>
-                                        <input
-                                            type="password"
-                                            className="form-control"
-                                            placeholder="Mínimo 8 caracteres"
-                                            value={adminPassword}
-                                            onChange={(e) => setAdminPassword(e.target.value)}
+                                        <input type="password" 
+                                            className="form-control form-control-sm"
+                                            name="inputPassword"
+                                            value={form.inputPassword}
+                                            onChange={handleInput}
                                         />
                                     </div>
 

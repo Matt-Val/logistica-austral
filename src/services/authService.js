@@ -33,5 +33,18 @@ export const authService = {
         };
         const response = await axios.post(`${BASE_URL}/registro`, usuarioBackend);
         return response.data;
+    },
+
+    // Registro Admin:
+    registerAdmin: async (reg) => { 
+        const usuarioBackend = { 
+            nombreUsuario: reg.inputNombre,
+            rutUsuario: reg.inputRut,
+            correoUsuario: reg.inputCorreo,
+            telefonoUsuario: reg.inputTelefono,
+            passwordUsuario: reg.inputPassword
+        };
+        const response = await axios.post(`${BASE_URL}/registroAdmin`, usuarioBackend);
+        return response.data;
     }
 }
