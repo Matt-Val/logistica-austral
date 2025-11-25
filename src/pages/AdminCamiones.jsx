@@ -1,91 +1,61 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import CamionCardAdmin from "../components/ui/CamionCardAdmin";
-
-
+import { camionService } from "../services/camionService";
 import "../css/admin.css"
-import trucks from "../data/camiones";
-
-// Clave de almacenamiento local para persistir disponibilidad
-const STORAGE_KEY = "flota_disponibilidad";
-
-function loadDisponibilidadInicial(fleet) { 
-    try { 
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return {};
-        const parsed = JSON.parse(raw);
-        // Filtra por ids vigentes por si la flota cambió
-        if (!parsed || typeof parsed !== "object") return {};
-        const valid = {};
-
-        for (const camion of fleet) { 
-            if (Object.prototype.hasOwnProperty.call(parsed, camion.id)) { 
-                valid[camion.id] = !!parsed[camion.id];
-            }
-        }
-        return valid;
-    } catch {
-        return {}; 
-    }
-}
-
-function saveDisponibilidad(map) { 
-    try { 
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(map));
-    } catch { 
-        // No hacer nada si falla
-    }
-}
 
 export default function AdminCamiones() { 
-    // 1.- Carga base
-    const flotaBase = trucks;
+    const [flota, setFlota] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    // 2.- Estado de disponibilidad
-    const[disponibilidad, setDisponibilidad] = useState( () => 
-        loadDisponibilidadInicial(flotaBase)
-    );
-
-    // 3.- Proyección de flota.
-    const flota = useMemo( () => { 
-        return flotaBase.map( (c) => ({ 
-            ...c,
-            // Si hay estado persistido, úsalo; si no, por defecto disponible = true salvo que venga definido en datos
-            disponible:
-                disponibilidad[c.id] !== undefined 
-                ? disponibilidad[c.id] 
-                : (c.disponible !== undefined ? !!c.disponible : true),
-        }));
-
-    }, [flotaBase, disponibilidad]);
-
-    // 4.- Persistencia
     useEffect( () => { 
-        saveDisponibilidad(disponibilidad);
-    }, [disponibilidad]);
+        cargarFlota();
+    },[]);
 
-    const toggleDisponibilidad = (id) => { 
-        setDisponibilidad( (prev) => { 
-            const current = prev[id];
-            return { ...prev, [id]: current === undefined ? false : !current};
-        });
+    const cargarFlota = async () => { 
+        try { 
+            setLoading(true);
+            const data = await camionService.getAdminCamiones(); 
+            setFlota(data);
+        } catch (error) { 
+            console.error("Error al cargar la flota: ", error);
+        } finally { 
+            setLoading(false);
+        }
     };
 
+    // Funcion para cambiar la disponibilidad
+    const toggleDisponibilidad = async (camion) => { 
+        try { 
+            const nuevoEstado = { ...camion, disponible: !camion.disponible};
+            await camionService.updateCamion(camion.id, nuevoEstado);
+
+            setFlota( prevFlota =>
+                prevFlota.map( c => c.id === camion.id ? nuevoEstado : c)
+            );
+        }catch (error) { 
+            console.error("Error al actualizar: ", error);
+            alert("No se pudo actualizar. Intente nuevamente.");
+        }
+    };
+
+    if (loading) return <div className="text-center mt-5">Cargando panel...</div>
+
     return (
-        <section className= "admin-camiones page">
-            <header className= "admin-header">
-                <h1>Administrar Camiones</h1>
-                <p className= "muted">Cambia rápidamente la disponibilidad de cada unidad.</p>
-            </header>
+    <section className= "admin-camiones page">
+        <header className= "admin-header">
+            <h1>Administrar Camiones</h1>
+            <p className= "muted">Gestiona la disponibilidad de tu flota.</p>
+        </header>
             
-            <div className="grid-camiones">
-                {flota.map( (camion) => (
-                    <CamionCardAdmin
-                        key={camion.id}
-                        camion={camion}
-                        onToggle={ () => toggleDisponibilidad(camion.id)}
-                    />
-                ))}
+        <div className="grid-camiones">
+            {flota.map( (camion) => (
+                <CamionCardAdmin
+                    key={camion.id}
+                    camion={camion}
+                    onToggle={ () => toggleDisponibilidad(camion)} 
+                />
+            ))}
         </div>
-        </section>
+    </section>
     );
 }

@@ -5,6 +5,7 @@ const BASE_URL = "http://3.208.33.39:8080/api/camiones"; // IP Elastica
 /*
     Funcion auxiliar para traducir de backend al front.
     Problema: Conflicto de nombres entre el backend y frontend
+    De backend a front:
 */
 const traduccionCamion = (cam) => { 
     return { 
@@ -16,19 +17,40 @@ const traduccionCamion = (cam) => {
         imagen: cam.imagenCamion,
         lateral: cam.imagenLateralCamion, 
         traccion: cam.traccionCamion,
-        longitudMax: cam.longitudMaxCamion, // Ojo con este, es un string en bd.
+        longitudMax: cam.longitudMaxCamion,
         ejes: cam.ejeCamion,
         peso: cam.pesoCamion,
         tipo: cam.tipoCamion,
-        disponible: cam.disponibleCamion
+        disponible: cam.disponibleCamion,
+        annio : cam.annioCamion
+    };
+};
+
+// de Front a Backend:
+const convertirCamionBackend = (cam) => { 
+    return { 
+        idCamion: cam.id,
+        marcaCamion: cam.marca,
+        nombreCamion: cam.nombre,
+        motorCamion: cam.motor,
+        descripcionCamion: cam.descripcion,
+        imagenCamion: cam.imagen,
+        imagenLateralCamion: cam.lateral,
+        traccionCamion: cam.traccion,
+        longitudMaxCamion: cam.longitudMax,
+        ejeCamion: cam.ejes,
+        pesoCamion: cam.peso,
+        tipoCamion: cam.tipo,
+        disponibleCamion: cam.disponible,
+        annioCamion: cam.annio
     };
 };
 
 export const camionService = { 
     
-    // Obtiene todos los camiones y los traduce.
+    // Para clientes: Obtener todos los camiones y traducirlos, solo los disponibles
     getAllCamiones: async () => { 
-        const response = await axios.get(BASE_URL);
+        const response = await axios.get(`${BASE_URL}`);
         return response.data.map(traduccionCamion);
         // Recorre el array y aplica la funcion.
     },
@@ -39,15 +61,26 @@ export const camionService = {
         return traduccionCamion(response.data);
     },
 
+    getAdminCamiones: async () => {
+        const response = await axios.get(`${API_URL}/admin/todos`);
+        return response.data.map(traduccionCamion);
+    },
+
+    updateCamion: async (id, camionFrontend) => { 
+        // Convertimos los datos al formato que se espera
+        const camionBackend = convertirCamionBackend(camionFrontend);
+
+        // Enviamos a la ruta adm correcta
+        const response = await axios.put(`${BASE_URL}/admin/${id}`, camionBackend);
+        return traduccionCamion(response.data);
+    },
+
+    
+
     // Lo dejamos por ahora
     createCamion: async (data) => { 
         return axios.post(BASE_URL,data);
     },
-
-    updateCamion: async (id, data) => { 
-        return axios.put(`${BASE_URL}/${id}`, data);
-    },
-
     deleteCamion: async (id) => { 
         return axios.delete(`${BASE_URL}/${id}`);
     }
