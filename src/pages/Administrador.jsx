@@ -103,9 +103,9 @@ export default function Administrador() {
                     <div className="admin-layout">
                         <div className="admin-sidebar">
                             <div className="admin-sidebar-title">Gestión</div>
-                            <button className="admin-nav-btn" onClick={() => navigate("/admin-camiones")}> Administrar Camiones</button>
-                            <button className="admin-nav-btn" onClick={handleVerArriendos}> Ver Arriendos</button>
-                            <button className="admin-nav-btn" onClick={toggleCrearUsuarios}> Crear Usuarios</button>
+                            <button className="admin-nav-btn" onClick={() => navigate("/admin-camiones")}>🚚 Administrar Camiones</button>
+                            <button className="admin-nav-btn" onClick={handleVerArriendos}>📄 Ver Cotizaciones</button>
+                            <button className="admin-nav-btn" onClick={toggleCrearUsuarios}>👤 Crear Usuarios</button>
                             <hr/>
                             <button className="admin-nav-btn admin-nav-danger" onClick={handleLogout}>⎋ Cerrar sesión</button>
                         </div>
@@ -113,7 +113,7 @@ export default function Administrador() {
                         {view === "crearUsuarios" && (
                             <div className="admin-content">
                                 <div className="d-flex justify-content-between align-items-start">
-                                    <h2 className="text-black bold mb-3 justify-content">Crear usuario administrador</h2>
+                                    <h2 className="text-black bold mb-3 justify-content">Crear user administrador</h2>
                                     <button type="button" className="btn-cerrar" onClick={toggleCrearUsuarios}></button>
                                 </div>
                                     <p className="text-secondary mb-3">Ingrese correo y contraseña para crear una cuenta con privilegios de administrador.
@@ -128,6 +128,7 @@ export default function Administrador() {
                                                 name="inputNombre" 
                                                 value={form.inputNombre}
                                                 onChange={handleInput}
+                                                placeholder="Javier Peña"
                                             />
                                     </div>
 
@@ -150,17 +151,19 @@ export default function Administrador() {
                                                 name="inputTelefono"
                                                 value={form.inputTelefono}
                                                 onChange={handleInput}
+                                                placeholder=" 9 1234 5678"
                                             />
                                         </div>
                                     </div>
 
                                     <div className="mb-2">
-                                        <label className="texto-grande-formulario">Correo</label>
+                                        <label className="text-grande-formulario">Correo</label>
                                         <input type="email" 
                                             className="form-control form-control-sm"
                                             name="inputCorreo"
                                             value={form.inputCorreo}
                                             onChange={handleInput}
+                                            placeholder="example@logistica.com"
                                         />
                                     </div>
 
@@ -171,6 +174,7 @@ export default function Administrador() {
                                             name="inputPassword"
                                             value={form.inputPassword}
                                             onChange={handleInput}
+                                            placeholder="**********"
                                         />
                                     </div>
 
