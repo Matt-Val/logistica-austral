@@ -18,6 +18,7 @@ export default function AdminCamiones() {
             setFlota(data);
         } catch (error) { 
             console.error("Error al cargar la flota: ", error);
+            alert("No se pudo cargar la lista.")
         } finally { 
             setLoading(false);
         }

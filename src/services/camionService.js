@@ -62,7 +62,7 @@ export const camionService = {
     },
 
     getAdminCamiones: async () => {
-        const response = await axios.get(`${API_URL}/admin/todos`);
+        const response = await axios.get(`${BASE_URL}/admin/todos`);
         return response.data.map(traduccionCamion);
     },
 
