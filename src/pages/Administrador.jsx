@@ -103,9 +103,9 @@ export default function Administrador() {
                     <div className="admin-layout">
                         <div className="admin-sidebar">
                             <div className="admin-sidebar-title">Gestión</div>
-                            <button className="admin-nav-btn" onClick={() => navigate("/admin-camiones")}>🚚 Administrar Camiones</button>
-                            <button className="admin-nav-btn" onClick={handleVerArriendos}>📄 Ver Arriendos</button>
-                            <button className="admin-nav-btn" onClick={toggleCrearUsuarios}>👤 Crear Usuarios</button>
+                            <button className="admin-nav-btn" onClick={() => navigate("/admin-camiones")}> Administrar Camiones</button>
+                            <button className="admin-nav-btn" onClick={handleVerArriendos}> Ver Arriendos</button>
+                            <button className="admin-nav-btn" onClick={toggleCrearUsuarios}> Crear Usuarios</button>
                             <hr/>
                             <button className="admin-nav-btn admin-nav-danger" onClick={handleLogout}>⎋ Cerrar sesión</button>
                         </div>

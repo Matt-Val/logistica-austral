@@ -17,7 +17,7 @@ const PopupCotizacion = () => {
         const { name, value } = e.target
         const inicio = name === 'inicio' ? value : item.fechas.inicio
         const fin = name === 'fin' ? value : item.fechas.fin
-           actualizarFechas(item.lineaId, inicio, fin)
+            actualizarFechas(item.lineaId, inicio, fin)
     }
 
     const irAlCarrito = () => { // con esto maneja el popup, asi dice: cierra y navega
