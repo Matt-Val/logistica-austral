@@ -44,7 +44,7 @@ export const authService = {
             telefonoUsuario: reg.inputTelefono,
             passwordUsuario: reg.inputPassword
         };
-        const response = await axios.post(`${BASE_URL}/registroAdmin`, usuarioBackend);
+        const response = await axios.post(`${BASE_URL}/registro-admin`, usuarioBackend);
         return response.data;
     }
 }

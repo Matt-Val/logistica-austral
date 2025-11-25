@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext"; 
 import { authService } from "../services/authService";
@@ -9,28 +9,45 @@ export default function Administrador() {
     const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    // 1.- Autenticación y Autorización
+    // 1.- Autenticación
     if (!user) { 
         return <Navigate to="/login" replace />;
     }
 
-    // validacion de admin
+    // 2.- Autorización Admin
     const normalized = String(user.correo || user.email || "").toLowerCase();
     const isAdmin = user?.isAdmin === true || normalized === ADMIN_EMAIL;
+    
     if (!isAdmin) { 
         return <Navigate to="/login" replace />;
     }
 
-    const [ formError, setFormError] = useState("");
-    const [ formOk, setFormOk] = useState("");
+    // 3.- Estados
+    const [view, setView] = useState("inicio"); 
+    
+    const [form, setForm] = useState({
+        inputNombre: "",
+        inputRut: "",
+        inputTelefono: "",
+        inputCorreo: "",
+        inputPassword: ""
+    });
 
+    const [formError, setFormError] = useState("");
+    const [formOk, setFormOk] = useState("");
+
+    // 4.- Manejadores
     const handleLogout = () => { 
         logout();
-        navigate("/login", { replace: true});
+        navigate("/login", { replace: true });
     };
 
+    const handleInput = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    }
+
     const handleVerArriendos = () => { 
-        window.alert("Esta funcionalidad está en mantenimiento, disculpe las molestias.");
+        window.alert("Esta funcionalidad está en mantenimiento.");
     }
 
     const handleCrearAdmin = async (e) => {
@@ -38,26 +55,28 @@ export default function Administrador() {
         setFormError("");
         setFormOk("");
 
-        //Validaciones básicas
+        // Validaciones
         if (!form.inputNombre || !form.inputRut || !form.inputCorreo || !form.inputPassword) { 
             setFormError("Por favor, complete todos los campos.");
             return;
         }
-        if (!email.includes("@") || !email.includes(".")) { 
+        if (!form.inputCorreo.includes("@") || !form.inputCorreo.includes(".")) { 
             setFormError("Por favor, ingrese un correo electrónico válido.");
             return;
         }
-        if (pass.length < 8 ) { 
-            setFormError("La contraseña debe tener al menos 8 caracteres,");
+        if (form.inputPassword.length < 8 ) { 
+            setFormError("La contraseña debe tener al menos 8 caracteres.");
+            return;
         }
 
         try { 
-            // Usamos el authService directo para que NO inicie sesion automaticamente
-            await authService.register(form);
+            // Llamada al servicio
+            await authService.registerAdmin(form);
 
             setFormOk("Usuario administrador creado exitosamente.");
-            // Limpiar el formulario
-            setFormError({ 
+            
+            // Limpiar formulario
+            setForm({ 
                 inputNombre: "",
                 inputRut: "",
                 inputTelefono: "",
@@ -66,12 +85,14 @@ export default function Administrador() {
             });
         } catch (error) { 
             console.error("Error al crear usuario admin: ", error);
-            setFormError("Error al crear usuario administrador. Verifique que el RUT o Correo no existan.");
+            setFormError("Error al crear usuario. Verifique que el RUT o Correo no existan.");
         }
     }
 
     const toggleCrearUsuarios = () => { 
-        setView( (prev) => (prev === "crearUsuarios" ? "inicio" : "crearUsuarios"));
+        setView((prev) => (prev === "crearUsuarios" ? "inicio" : "crearUsuarios"));
+        setFormError("");
+        setFormOk("");
     }
     return(
         <main className="admin-bg">
@@ -92,7 +113,7 @@ export default function Administrador() {
                         {view === "crearUsuarios" && (
                             <div className="admin-content">
                                 <div className="d-flex justify-content-between align-items-start">
-                                    <h2 className="text-black bold mb-3">Crear usuario administrador</h2>
+                                    <h2 className="text-black bold mb-3 justify-content">Crear usuario administrador</h2>
                                     <button type="button" className="btn-cerrar" onClick={toggleCrearUsuarios}></button>
                                 </div>
                                     <p className="text-secondary mb-3">Ingrese correo y contraseña para crear una cuenta con privilegios de administrador.
