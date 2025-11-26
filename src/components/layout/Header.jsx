@@ -26,11 +26,28 @@ const Header = () => {
     return(
         <header className="encabezado">
             <div className="container">
-                <div className="row align-items-center">
-                    <div className="col-12 col-lg-3 d-flex justify-content-lg-start justify-content-center mb-3 mb-lg-0">
+                <div className="row d-lg-none mb-3">
+                    <div className="col-12 d-flex justify-content-center">
+                        <form className="d-flex busqueda-movil" role="search" onSubmit={onSubmit}>
+                            <input
+                                type="search"
+                                className="form-control me-2"
+                                placeholder="¿Qué equipo deseas arrendar?"
+                                aria-label="Search"
+                                value={q}
+                                onChange={(e) => setQ(e.target.value)}
+                            />
+                            <button type="submit" className="btn btn-primary boton-buscar">Buscar</button>
+                        </form>
+                    </div>
+                </div>
+
+                {/* Desktop */}
+                <div className="row align-items-center d-none d-lg-flex">
+                    <div className="col-lg-3 d-flex justify-content-start mb-0">
                         <img src={logo} alt="Logo" className="img-fluid" style={{ maxWidth: '160px' }} />
                     </div>
-                    <div className="col-12 col-lg-6 d-flex justify-content-center">
+                    <div className="col-lg-6 d-flex justify-content-center">
                         <form className="w-100 d-flex align-items-center justify-content-center" role="search" onSubmit={onSubmit}>
                             <input
                                 type="search"
@@ -38,12 +55,12 @@ const Header = () => {
                                 placeholder="¿Qué equipo deseas arrendar?"
                                 aria-label="Search"
                                 value={q}
-                                onChange={ (e) => setQ(e.target.value)}
+                                onChange={(e) => setQ(e.target.value)}
                             />
                             <button type="submit" className="btn boton-buscar">Buscar</button>
                         </form>
                     </div>
-                    <div className="col-lg-3 d-none d-lg-flex justify-content-end align-items-center">
+                    <div className="col-lg-3 d-flex justify-content-end align-items-center">
                         <a href="#" className="icono-carrito" onClick={(e) => { e.preventDefault(); navegar('/cotizacion') }} aria-label="Carrito de cotización">
                             <span role="img" aria-hidden>🛒</span>
                             {total > 0 && <span className="badge">{total}</span>}

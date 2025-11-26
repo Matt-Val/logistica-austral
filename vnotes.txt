@@ -9,6 +9,8 @@ npm create vite@latest NOMBREPROYECTO
 
 npm run dev 
     > para correr proyecto
+    > opcional, para correr en red local
+        npm run dev -- --host 
 
 npm install react-router-dom
     > para las rutas de router
@@ -28,3 +30,6 @@ npm install --save-dev vitest @vitest/coverage-v8 @testing-library/react @testin
     > para test con vite
 
 recordar estas comillas invertidas (backticks) ` `
+
+npm install axios
+    > para consultas http

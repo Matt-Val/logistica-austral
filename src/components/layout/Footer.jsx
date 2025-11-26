@@ -10,9 +10,9 @@ const Footer = () => {
         <footer>
         <div className="footer-box">
             <div className="d-flex justify-content-center border-top">
-                <img src={marcas} className="img-fluid" alt="" style={{ maxWidth: '500px' }}/>
+                <img src={marcas} className="img-fluid marcas-img" alt="Marcas" />
             </div>
-            <div className="d-flex flex-wrap justify-content-between align-items-center py-3">
+            <div className="d-flex flex-wrap justify-content-between align-items-center py-3 footer-links-row">
                 <p className="col-md-4 mb-0">
                     &copy; 2025 Logística Austral
                 </p>
