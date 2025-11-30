@@ -4,7 +4,6 @@ import { Link } from "react-router-dom"
 import marcas from '../../assets/img/marcas.png'
 import logo from '../../assets/logo-spread-black.png'
 
-// me queda pendiente: Dirigir estilos directamente con css
 const Footer = () => {
     return(
         <footer>
@@ -19,7 +18,7 @@ const Footer = () => {
                 <a href="/" className="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto" aria-label="Bootstrap">
                     <img src={logo} alt="" className="img-fluid" style={{ maxWidth: '160px' }} />
                 </a>
-                <ul className="nav col-md-4 justify-content-end">
+                <ul className="nav col-md-4 justify-content-md-end justify-content-center mt-2 mt-md-0">
                     <li className="nav-item">
                        <Link to="/quienes-somos" className="nav-link link-body-emphasis px-8">Quiénes Somos</Link>
                     </li>

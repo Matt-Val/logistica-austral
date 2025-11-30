@@ -9,6 +9,7 @@ const ESTADOS = [
 	{ value: "Pendiente", label: "Pendiente", color: "warning" },
 	{ value: "Aprobada", label: "Aprobada", color: "success" },
 	{ value: "Rechazada", label: "Rechazada", color: "danger" },
+	{ value: "Finalizada", label: "Finalizada", color: "info"},
 ];
 
 /**
@@ -190,7 +191,7 @@ export default function VerCotizaciones() {
 												<th>Región</th>
 												<th>Fecha inicio</th>
 												<th>Estado</th>
-												<th>Agregado</th>
+												<th>Fecha de solicitud</th>
 											</tr>
 										</thead>
 										<tbody>
