@@ -15,6 +15,7 @@ import DetalleCamion from './pages/DetalleCamion'
 import Explorar from './pages/Explorar'
 import Cotizacion from './pages/Cotizacion'
 import AdminCamiones from './pages/AdminCamiones'
+import VerCotizaciones from './pages/VerCotizaciones'
 
 import './css/App.css'
 import './css/login.css'
@@ -23,7 +24,6 @@ import './css/quiensomos.css'
 
 
 function App() {
-  // me carga esta identacion
   // <Route path='/' element={<Inicio />} /> :: este es el homepage, el "inicio" de Inicio.jsx
     return (
       <>
@@ -35,6 +35,7 @@ function App() {
           <Route path='/quienes-somos' element={<QuienesSomos />} />
           <Route path='/Inicio' element={<Inicio />} />
           <Route path='/Administrador' element={<Administrador />} />
+          <Route path='/administrador/cotizaciones' element={<VerCotizaciones />} />
           <Route path='/explorar' element={<Explorar />} />
           <Route path='/detalle/:id' element={<DetalleCamion />} />
           <Route path='/admin-camiones' element={<AdminCamiones />} />

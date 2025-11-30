@@ -1,6 +1,7 @@
 import React from 'react'
 import { useCarrito } from '../context/CarritoContext'
 import Carrito from '../components/ui/Carrito'
+import { cotizacionService } from '../services/cotizacionService'
 
 const REGIONES_CHILE = [
     'Valparaíso',
@@ -23,10 +24,13 @@ const Cotizacion = () => {
         fechaInicio: ''
     })
     const [err, setErr] = React.useState('')
+    const [enviando, setEnviando] = React.useState(false)
+    const [exito, setExito] = React.useState('')
 
-    const enviarFormulario = (e) => {
+    const enviarFormulario = async (e) => {
         e.preventDefault()
         setErr('')
+        setExito('')
 
         // Validaciones como es debido sss
         const { nombre, rut, telefono, email, region, fechaInicio } = form
@@ -66,9 +70,31 @@ const Cotizacion = () => {
             return
         }
 
-        alert('Solicitud de cotización enviada. ¡Te contactaremos pronto!')
-            // limpieza basica
-            setForm({ nombre: '', rut: '', telefono: '', email: '', region: '', fechaInicio: '' })
+        // Enviar al microservicio
+        try {
+            setEnviando(true)
+            const respuesta = await cotizacionService.crearCotizacion(form, items, null) // idUsuario null (puede ser anonimo)
+            // Puedes usar respuesta para mostrar número o id si backend lo retorna.
+            setExito('Solicitud de cotización enviada. ¡Te contactaremos pronto!')
+            // limpieza basica de formulario
+            setForm({ 
+                nombre: '',
+                rut: '', 
+                telefono: '', 
+                email: '', 
+                region: '', 
+                fechaInicio: '' })
+            
+            // vaciar carrito (usuario puede no estar logeado)
+            try {
+                items.forEach((it) => quitarItem(it.lineaId ?? it.id))
+            } catch {}
+        } catch (error) {
+            console.error(error)
+            setErr('Ocurrió un error al enviar la cotización. Intente nuevamente.')
+        } finally {
+            setEnviando(false)
+        }
     }
 
     const onChange = (e) => {
@@ -163,8 +189,15 @@ const Cotizacion = () => {
                                 <div className="alert alert-danger" role="alert">{err}</div>
                             </div>
                         )}
+                        {exito && (
                             <div className="col-12">
-                            <button className="btn boton-formulario">Enviar</button>
+                                <div className="alert alert-success" role="alert">{exito}</div>
+                            </div>
+                        )}
+                            <div className="col-12">
+                            <button className="btn boton-formulario" type="submit" disabled={enviando} onClick={enviarFormulario}>
+                                {enviando ? 'Enviando...' : 'Enviar'}
+                            </button>
                         </div>
                     </form>
                 </div>
