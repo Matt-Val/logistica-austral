@@ -47,7 +47,7 @@ export default function Administrador() {
     }
 
     const handleVerArriendos = () => { 
-        window.alert("Esta funcionalidad está en mantenimiento.");
+        navigate("/administrador/cotizaciones");
     }
 
     const handleCrearAdmin = async (e) => {
