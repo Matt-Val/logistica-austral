@@ -17,6 +17,22 @@ const ESTADOS = [
  * 
  */
 export default function VerCotizaciones() {
+	// para eliminar cotizacion con service 
+	const [eliminandoId, setEliminandoId] = useState(null);
+
+	const handleEliminar = async (id) => {
+		if (!id || id === "-") return;
+		try {
+			setEliminandoId(id);
+			await cotizacionService.eliminarCotizacion(id);
+			setCotizaciones(prev => prev.filter(c => String(c.idCotizacion ?? c.id) !== String(id)));
+			setFiltered(prev => prev.filter(c => String(c.idCotizacion ?? c.id) !== String(id)));
+		} catch (err) {
+			alert("Error al eliminar la cotización");
+		} finally {
+			setEliminandoId(null);
+		}
+	};
 	// crea fila por fila la tabla de cotizacion
 	function tablaCotizacion(coti, idx, arr) {
 		const id = coti.idCotizacion ?? coti.id ?? "-";
@@ -65,6 +81,19 @@ export default function VerCotizaciones() {
 					</div>
 				</td>
 				<td>{agregado ? String(agregado).slice(0, 10) : ""}</td>
+				<td className="text-end">
+					<button
+						className="btn btn-sm btn-outline-danger"
+						disabled={eliminandoId === id}
+						onClick={() => handleEliminar(id)}
+						title="Eliminar cotización"
+					>
+						{eliminandoId === id && (
+							<span className="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+						)}
+						Eliminar
+					</button>
+				</td>
 			</tr>
 		);
 	}
@@ -192,6 +221,7 @@ export default function VerCotizaciones() {
 												<th>Fecha inicio</th>
 												<th>Estado</th>
 												<th>Fecha de solicitud</th>
+												<th className="text-end">Acciones</th>
 											</tr>
 										</thead>
 										<tbody>
