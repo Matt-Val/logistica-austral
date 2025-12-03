@@ -46,5 +46,23 @@ export const authService = {
         };
         const response = await axios.post(`${BASE_URL}/registro-admin`, usuarioBackend);
         return response.data;
+    },
+
+    updateProfile: async (id, datosUsuario) => {
+        try { 
+            const response = await axios.put(`${BASE_URL}/usuarios/${id}`, datosUsuario)
+            return response.data;
+        } catch (error) {
+            throw error.response ? error.response.data : new Error("Error al actualizar el perfil");
+        }
+    },
+
+    deleteAccount: async (id) => {
+        try { 
+            await axios.delete(`${BASE_URL}/usuarios/${id}`);
+            return true;
+        } catch (error) {
+            throw error.response ? error.response.data : new Error('Error de conexión');
+        }
     }
 }

@@ -16,6 +16,7 @@ import Explorar from './pages/Explorar'
 import Cotizacion from './pages/Cotizacion'
 import AdminCamiones from './pages/AdminCamiones'
 import VerCotizaciones from './pages/VerCotizaciones'
+import MiCuenta from './pages/MiCuenta'
 
 import './css/App.css'
 import './css/login.css'
@@ -40,6 +41,7 @@ function App() {
           <Route path='/detalle/:id' element={<DetalleCamion />} />
           <Route path='/admin-camiones' element={<AdminCamiones />} />
           <Route path='/cotizacion' element={<Cotizacion />} />
+          <Route path='/mi-cuenta' element={<MiCuenta />} />
         </Routes>
         {/* Popup global para fechas del ítem agregado */}
         <PopupCotizacion />
