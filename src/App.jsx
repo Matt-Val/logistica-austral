@@ -22,6 +22,8 @@ import './css/App.css'
 import './css/login.css'
 import './css/admin.css'
 import './css/quiensomos.css'
+import './css/MiCuenta.css'
+
 
 
 function App() {

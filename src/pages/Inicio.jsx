@@ -1,12 +1,13 @@
 
 import logisticaMapa from '../assets/img/chl-log-aus.png'
 import marcas from '../assets/img/marcas.png'
-
+import { Link } from 'react-router-dom'
 
 import Carrusel from '../components/ui/Carrusel'
 
 import '../css/inicio.css'
 import '../css/login.css'
+
 
 function Inicio() {
     return(
@@ -30,6 +31,22 @@ function Inicio() {
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div style={{ marginTop: '20px', textAlign: 'center', marginBottom: '40px'}}>
+                <Link to= "/mi-cuenta">
+                        <button style= {{
+                            padding: '10px 20px',
+                            backgroundColor: '#000',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '5px',
+                            cursor: 'pointer',
+                            fontSize: '16px'
+                    }}>
+                        Ir a Mi Cuenta
+                    </button>
+                </Link>
         </div>
     </>
     )
