@@ -17,7 +17,7 @@ Aplicación web desarrollada en **React + Vite** para la gestión, arriendo y co
 * **Gestión de Usuarios:** Funcionalidad para crear usuarios administradores.
 
 ## Tecnologías Utilizadas
-* **Core:** [React 19](https://react.dev/), [Vite](https://vitejs.dev/)
+* **Core:** [React 19], [Vite]
 * **Estilos:** [Bootstrap 5](https://getbootstrap.com/)
 * **Peticiones HTTP:** Axios (Conexión a API REST externa).
 * **Testing:** Vitest, React Testing Library, JSDOM.
@@ -48,3 +48,4 @@ src/
 ├── main.jsx         # Punto de entrada de React
 └── App.jsx          # Configuración de rutas
 test/                # Pruebas unitarias e integración (Vitest)
+
